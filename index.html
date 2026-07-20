@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VOLTACS | Électricité Résidentielle & Domotique</title>
+    <style>
+        /* --- RESET & VARIABLES --- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        :root {
+            --bg-dark: #0a0b0d;
+            --bg-card: #121418;
+            --text-light: #ffffff;
+            --text-muted: #a0a5b0;
+            --border-color: #242730;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-light);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* --- HEADER & NAVIGATION --- */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 8%;
+            border-bottom: 1px solid var(--border-color);
+            background-color: rgba(10, 11, 13, 0.95);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            backdrop-filter: blur(5px);
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logo-img {
+            height: 50px;
+            object-fit: contain;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+        }
+
+        nav a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.95rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: color 0.3s ease;
+        }
+
+        nav a:hover {
+            color: var(--text-light);
+        }
+
+        .btn-contact {
+            background: transparent;
+            border: 2px solid var(--text-light);
+            color: var(--text-light);
+            padding: 8px 20px;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            clip-path: polygon(10px 0%, 100% 0%, calc(100% - 10px) 100%, 0% 100%);
+        }
+
+        .btn-contact:hover {
+            background-color: var(--text-light);
+            color: var(--bg-dark);
+        }
+
+        /* --- HERO SECTION --- */
+        .hero {
+            min-height: 80vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 0 20px;
+            background: radial-gradient(circle at center, rgba(255,255,255,0.03) 0%, rgba(10,11,13,1) 70%);
+            position: relative;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-image: linear-gradient(rgba(36, 39, 48, 0.1) 1px, transparent 1px),
+                              linear-gradient(90deg, rgba(36, 39, 48, 0.1) 1px, transparent 1px);
+            background-size: 40px 40px;
+            z-index: -1;
+        }
+
+        .hero-big-logo {
+            width: 320px; /* Taille idéale pour afficher ton logo textuel complet au centre */
+            max-width: 90%;
+            height: auto;
+            margin-bottom: 30px;
+        }
+
+        .hero p {
+            color: var(--text-muted);
+            font-size: 1.2rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            margin-bottom: 40px;
+            max-width: 600px;
+        }
+
+        .hero-cta {
+            background-color: var(--text-light);
+            color: var(--bg-dark);
+            padding: 15px 40px;
+            font-size: 1rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            border: none;
+            letter-spacing: 2px;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.3s;
+            clip-path: polygon(15px 0%, 100% 0%, calc(100% - 15px) 100%, 0% 100%);
+        }
+
+        .hero-cta:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
+        }
+
+        /* --- SERVICES SECTION --- */
+        .services {
+            padding: 100px 8%;
+            background-color: var(--bg-dark);
+        }
+
+        .section-title {
+            font-size: 2rem;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            margin-bottom: 60px;
+            text-align: center;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 50px;
+            height: 3px;
+            background-color: var(--text-light);
+            margin: 15px auto 0 auto;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+        }
+
+        .service-card {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-color);
+            padding: 40px;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .service-card::before {
+            content: '';
+            position: absolute;
+            top: -1px; right: -1px;
+            border-width: 0 16px 16px 0;
+            border-style: solid;
+            border-color: var(--bg-dark) var(--bg-dark) transparent transparent;
+            display: block;
+            width: 0;
+        }
+
+        .service-card:hover {
+            border-color: var(--text-light);
+            transform: translateY(-5px);
+        }
+
+        .service-icon {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            color: var(--text-light);
+        }
+
+        .service-card h3 {
+            font-size: 1.4rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 15px;
+        }
+
+        .service-card p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+
+        /* --- CONTACT SECTION --- */
+        .contact {
+            padding: 100px 8%;
+            background-color: var(--bg-card);
+            border-top: 1px solid var(--border-color);
+        }
+
+        .contact-container {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-group label {
+            display: block;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 0.85rem;
+            margin-bottom: 8px;
+            color: var(--text-muted);
+        }
+
+        .form-group input, .form-group textarea {
+            width: 100%;
+            background-color: var(--bg-dark);
+            border: 1px solid var(--border-color);
+            padding: 12px 15px;
+            color: var(--text-light);
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+
+        .form-group input:focus, .form-group textarea:focus {
+            outline: none;
+            border-color: var(--text-light);
+        }
+
+        .btn-submit {
+            width: 100%;
+            background-color: var(--text-light);
+            color: var(--bg-dark);
+            padding: 15px;
+            font-size: 1rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            border: none;
+            letter-spacing: 2px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            clip-path: polygon(15px 0%, 100% 0%, calc(100% - 15px) 100%, 0% 100%);
+        }
+
+        .btn-submit:hover {
+            background-color: var(--text-muted);
+        }
+
+        /* --- FOOTER --- */
+        footer {
+            padding: 40px 8%;
+            background-color: var(--bg-dark);
+            border-top: 1px solid var(--border-color);
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            letter-spacing: 1px;
+        }
+
+        /* --- RESPONSIVE DESIGN --- */
+        @media (max-width: 768px) {
+            header {
+                flex-direction: column;
+                gap: 20px;
+                padding: 20px;
+            }
+            nav ul {
+                gap: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- NAV BAR -->
+    <header>
+        <div class="logo-container">
+            <!-- Lien mis à jour pour chercher directement ton fichier sur GitHub -->
+            <img src="logo.voltacs.jpg" alt="VOLTACS Logo" class="logo-img">
+        </div>
+        <nav>
+            <ul>
+                <li><a href="#accueil">Accueil</a></li>
+                <li><a href="#services">Services</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+        <button class="btn-contact" onclick="document.getElementById('contact').scrollIntoView({behavior: 'smooth'});">En savoir plus</button>
+    </header>
+
+    <!-- HERO SECTION -->
+    <section class="hero" id="accueil">
+        <!-- Ton logo s'affiche en grand au centre de la page d'accueil -->
+        <img src="logo.voltacs.jpg" alt="VOLTACS" class="hero-big-logo">
+        <p>Électricité Résidentielle & Domotique</p>
+        <button class="hero-cta" onclick="document.getElementById('contact').scrollIntoView({behavior: 'smooth'});">Demander un devis</button>
+    </section>
+
+    <!-- SERVICES SECTION -->
+    <section class="services" id="services">
+        <h2 class="section-title">Nos Domaines d'Expertise</h2>
+        <div class="services-grid">
+            
+            <div class="service-card">
+                <div class="service-icon">⚡</div>
+                <h3>Électricité Résidentielle</h3>
+                <p>Installation complète, mise en conformité, tableaux électriques et rénovation de vos réseaux pour une sécurité et une fiabilité absolues.</p>
+            </div>
+
+            <div class="service-card">
+                <div class="service-icon">🤖</div>
+                <h3>Domotique Intégrée</h3>
+                <p>Automatisation intelligente de votre habitat : gestion de l'éclairage, des ouvrants, du chauffage et scénarios personnalisés pour un confort moderne.</p>
+            </div>
+
+            <div class="service-card">
+                <div class="service-icon">🛡️</div>
+                <h3>Sécurité & Réseaux</h3>
+                <p>Solutions connectées de contrôle d'accès, caméras de surveillance et câblage réseau VDI pour une maison entièrement sécurisée et interconnectée.</p>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- CONTACT SECTION -->
+    <section class="contact" id="contact">
+        <h2 class="section-title">Un projet ? Contactez-nous</h2>
+        <div class="contact-container">
+            <form onsubmit="event.preventDefault(); alert('Message envoyé avec succès ! (Simulation)');">
+                <div class="form-group">
+                    <label for="name">Nom / Entreprise</label>
+                    <input type="text" id="name" required autocomplete="name">
+                </div>
+                <div class="form-group">
+                    <label for="email">Adresse E-mail</label>
+                    <input type="email" id="email" required autocomplete="email">
+                </div>
+                <div class="form-group">
+                    <label for="message">Votre Projet (Rénovation, Neuf, Domotique...)</label>
+                    <textarea id="message" rows="5" required></textarea>
+                </div>
+                <button type="submit" class="btn-submit">Envoyer la demande</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+        <p>&copy; 2026 VOLTACS. Tous droits réservés. Électricité Résidentielle & Domotique.</p>
+    </footer>
+
+</body>
+</html>
