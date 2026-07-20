@@ -116,27 +116,22 @@
             height: 90px;
         }
 
-        /* Le conteneur du logo dans le coin */
         .logo-placeholder {
             width: 140px;
             height: 50px;
             position: relative;
         }
 
-        /* LE LOGO VIVANT (TRANSITION CENTRE <-> COIN) */
+        /* TAILLE AJUSTÉE ICI : 750px de large */
         .logo-img {
             object-fit: contain;
             position: fixed;
             z-index: 1001;
-            
-            /* Position par défaut : AU CENTRE de l'écran d'accueil */
-            top: 38vh;
+            top: 35vh; /* Légèrement remonté pour équilibrer la hauteur */
             left: 50vw;
-            width: 450px;
-            height: 160px;
+            width: 750px;  /* Modifié à 750px */
+            height: 270px; /* Modifié pour garder les proportions */
             transform: translate(-50%, -50%);
-            
-            /* Transition ultra fluide pour le scroll */
             transition: top 0.5s ease-in-out, 
                         left 0.5s ease-in-out, 
                         width 0.5s ease-in-out, 
@@ -145,20 +140,19 @@
                         opacity 0.3s ease;
         }
 
-        /* Style quand le client scroll vers le bas : Le logo vole dans le coin */
         .logo-img.scrolled {
-            top: 45px; /* Aligné au milieu du header (height 90px / 2) */
-            left: 8%;  /* Aligné avec le padding du header */
+            top: 45px; 
+            left: 8%;  
             width: 140px;
             height: 50px;
-            transform: translate(0, -50%); /* Aligné sur son propre axe vertical */
+            transform: translate(0, -50%); 
         }
 
         nav ul {
             display: flex;
             list-style: none;
             gap: 30px;
-            margin-left: auto; /* Pousse le menu à droite pour laisser la place au logo au centre au début */
+            margin-left: auto; 
             margin-right: 30px;
         }
 
@@ -198,18 +192,18 @@
 
         /* --- HERO SECTION --- */
         .hero {
-            min-height: 90vh;
+            min-height: 95vh;
             display: flex;
             flex-direction: column;
-            justify-content: flex-end; /* Laisse le haut libre pour le gros logo */
+            justify-content: flex-end; 
             align-items: center;
             text-align: center;
-            padding: 0 20px 10vh 20px;
+            padding: 0 20px 8vh 20px;
             background: radial-gradient(circle at center, rgba(0, 210, 255, 0.04) 0%, rgba(7, 9, 14, 1) 70%);
         }
 
         .hero-title-group {
-            margin-top: 200px; /* Espace pour pas que le texte chevauche le gros logo */
+            margin-top: 320px; /* Augmenté pour éviter la superposition avec le grand logo */
         }
 
         .hero-title-group h1 {
@@ -445,7 +439,6 @@
     <!-- NAV BAR -->
     <header>
         <div class="logo-placeholder">
-            <!-- Notre logo magique qui bouge au scroll -->
             <img src="logo.voltacs-removebg-preview.png" alt="VOLTACS Logo" class="logo-img" id="original-logo">
         </div>
         <nav>
@@ -554,40 +547,33 @@
         const flashScreen = document.getElementById('flash-screen');
         const buttons = document.querySelectorAll('.action-btn');
 
-        // 1. DÉTECTION DU SCROLL : Gère le logo Centre <-> Coin gauche
         function handleScroll() {
-            // Si l'écran est petit (mobile), on désactive cet effet pour garder le responsive propre
             if (window.innerWidth <= 768) return;
 
             if (window.scrollY > 60) {
-                originalLogo.classList.add('scrolled'); // Envoie le logo dans le coin
+                originalLogo.classList.add('scrolled'); 
             } else {
-                originalLogo.classList.remove('scrolled'); // Remet le logo au centre
+                originalLogo.classList.remove('scrolled'); 
             }
         }
 
         window.addEventListener('scroll', handleScroll);
         window.addEventListener('resize', handleScroll);
-        // Lancement immédiat au cas où la page charge déjà scrollée
         handleScroll();
 
-
-        // 2. L'ANIMATION DE SURCHARGE ET EXPLOSION ÉLECTRIQUE SUR LES BOUTONS
         buttons.forEach(button => {
             button.addEventListener('click', (e) => {
                 e.preventDefault();
                 const targetId = button.getAttribute('data-target');
                 
-                // On prend la position exacte où se trouve le logo à ce moment précis (soit au centre, soit dans le coin)
                 const origRect = originalLogo.getBoundingClientRect();
                 
-                // Préparation instantanée du clone à la position actuelle du logo
                 logoClone.style.transition = 'none';
                 logoClone.style.top = origRect.top + 'px';
                 logoClone.style.left = origRect.left + 'px';
                 logoClone.style.width = origRect.width + 'px';
                 logoClone.style.height = origRect.height + 'px';
-                // Si le logo est dans le coin, son transform d'origine CSS est différent
+                
                 if(originalLogo.classList.contains('scrolled')) {
                     logoClone.style.transform = 'translate(0, -50%)';
                 } else {
@@ -596,26 +582,23 @@
                 logoClone.style.display = 'block';
                 logoClone.style.opacity = '1';
 
-                // On cache le logo de base et on active le fond sombre
                 originalLogo.style.opacity = '0';
                 overlay.classList.add('active');
                 
-                // On force le clone à aller ou rester au centre absolu et devenir très grand (500px)
+                // FORCE LE CLONE A S'AGRANDIR À 800px AU CENTRE PENDANT L'ANIMATION ÉLECTRIQUE
                 setTimeout(() => {
                     logoClone.style.transition = 'all 0.6s cubic-bezier(0.25, 1, 0.5, 1)';
                     logoClone.style.top = '50vh';
                     logoClone.style.left = '50vw';
-                    logoClone.style.width = '500px';
-                    logoClone.style.height = '180px';
+                    logoClone.style.width = '800px';   
+                    logoClone.style.height = '290px';  
                     logoClone.style.transform = 'translate(-50%, -50%)';
                 }, 50);
 
-                // Secousses électriques
                 setTimeout(() => {
                     logoClone.classList.add('charging');
                 }, 650);
 
-                // Explosion !
                 setTimeout(() => {
                     logoClone.classList.remove('charging');
                     logoClone.classList.add('explode');
@@ -630,13 +613,11 @@
                     createSparks();
                 }, 2200);
 
-                // Déplacement fluide vers la section ciblée
                 setTimeout(() => {
                     document.getElementById(targetId).scrollIntoView({ behavior: 'smooth' });
                     overlay.classList.remove('active');
                 }, 2600);
 
-                // Reset complet pour la suite
                 setTimeout(() => {
                     logoClone.style.display = 'none';
                     logoClone.classList.remove('explode');
