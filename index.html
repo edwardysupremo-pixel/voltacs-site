@@ -41,7 +41,7 @@
             justify-content: center;
             align-items: center;
             background: rgba(7, 9, 14, 0);
-            transition: background 0.4s ease;
+            transition: background 0.2s ease; /* Accéléré de 0.4s à 0.2s */
         }
 
         #electricity-overlay.active {
@@ -56,16 +56,16 @@
             display: none;
             object-fit: contain;
             transform-origin: center center;
-            transition: all 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+            transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1); /* Accéléré de 0.6s à 0.3s */
         }
 
         .electric-clone.charging {
-            animation: electricity-shake 0.1s infinite alternate, electric-glow 0.3s infinite alternate;
+            animation: electricity-shake 0.05s infinite alternate, electric-glow 0.15s infinite alternate; /* Fréquence doublée */
             filter: drop-shadow(0 0 30px var(--electric-cyan));
         }
 
         .electric-clone.explode {
-            animation: logo-explode 0.4s forwards ease-out;
+            animation: logo-explode 0.2s forwards ease-out; /* Accéléré de 0.4s à 0.2s */
         }
 
         .spark {
@@ -538,7 +538,7 @@
         <p>&copy; 2026 VOLTACS. Ingénierie Électrique & Domotique. Tous droits réservés.</p>
     </footer>
 
-    <!-- LOGIQUE D'ANIMATION ET SCROLL SIMULTANÉ -->
+    <!-- LOGIQUE D'ANIMATION ET SCROLL RAPIDE (DIVISÉ PAR 2) -->
     <script>
         const originalLogo = document.getElementById('original-logo');
         const logoClone = document.getElementById('logo-clone');
@@ -584,25 +584,25 @@
                 originalLogo.style.opacity = '0';
                 overlay.classList.add('active');
                 
-                // 1. DÉROULEMENT IMMÉDIAT EN ARRIÈRE-PLAN
+                // Déroulement immédiat en arrière-plan
                 document.getElementById(targetId).scrollIntoView({ behavior: 'smooth' });
 
-                // Le clone vient se positionner au centre de la zone de vision actuelle pendant le scroll
+                // Positionnement ultra rapide au centre (0.3s au lieu de 0.6s)
                 setTimeout(() => {
-                    logoClone.style.transition = 'all 0.6s cubic-bezier(0.25, 1, 0.5, 1)';
+                    logoClone.style.transition = 'all 0.3s cubic-bezier(0.25, 1, 0.5, 1)';
                     logoClone.style.top = '50vh';
                     logoClone.style.left = '50vw';
                     logoClone.style.width = '1050px';   
                     logoClone.style.height = '378px';  
                     logoClone.style.transform = 'translate(-50%, -50%)';
-                }, 50);
+                }, 30);
 
-                // Charge électrique
+                // Début de la surcharge électrique plus rapide (0.35s)
                 setTimeout(() => {
                     logoClone.classList.add('charging');
-                }, 650);
+                }, 350);
 
-                // 2. EXPLOSION DIRECTE SUR LA PAGE SOUHAITÉE
+                // EXPLOSION APRÈS 1.1s (au lieu de 2.2s)
                 setTimeout(() => {
                     logoClone.classList.remove('charging');
                     logoClone.classList.add('explode');
@@ -610,23 +610,22 @@
                     flashScreen.style.transition = "none";
                     flashScreen.style.opacity = "1";
                     setTimeout(() => {
-                        flashScreen.style.transition = "opacity 0.5s ease";
+                        flashScreen.style.transition = "opacity 0.3s ease";
                         flashScreen.style.opacity = "0";
-                    }, 50);
+                    }, 30);
 
                     createSparks();
-                    // On retire l'overlay sombre pour révéler instantanément la page finale
                     overlay.classList.remove('active');
-                }, 2200);
+                }, 1100);
 
-                // Nettoyage des éléments d'animation
+                // Fin de l'animation et nettoyage accéléré
                 setTimeout(() => {
                     logoClone.style.display = 'none';
                     logoClone.classList.remove('explode');
                     
-                    originalLogo.style.transition = 'opacity 0.8s ease';
+                    originalLogo.style.transition = 'opacity 0.4s ease';
                     originalLogo.style.opacity = '1';
-                }, 2700);
+                }, 1450);
             });
         });
 
@@ -649,12 +648,12 @@
                     { opacity: 1, height: '38px', transform: `translate(-50%, -50%) rotate(${angle + Math.PI/2}deg) translateY(0px)` },
                     { opacity: 0, height: '5px', transform: `translate(-50%, -50%) rotate(${angle + Math.PI/2}deg) translateY(${-destY}px) translateX(${destX}px)` }
                 ], {
-                    duration: 400 + Math.random() * 500,
+                    duration: 200 + Math.random() * 250, // Particules deux fois plus véloces
                     easing: 'cubic-bezier(0.1, 0.8, 0.3, 1)',
                     fill: 'forwards'
                 });
 
-                setTimeout(() => spark.remove(), 1000);
+                setTimeout(() => spark.remove(), 600);
             }
         }
     </script>
