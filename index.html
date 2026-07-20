@@ -66,7 +66,7 @@
         /* Surcharge électrique (secousses + lueur) au centre */
         .electric-clone.charging {
             animation: electricity-shake 0.1s infinite alternate, electric-glow 0.3s infinite alternate;
-            filter: drop-shadow(0 0 25px var(--electric-cyan));
+            filter: drop-shadow(0 0 30px var(--electric-cyan));
         }
 
         /* L'explosion */
@@ -77,7 +77,7 @@
         /* Particules d'explosion */
         .spark {
             position: absolute;
-            width: 4px; height: 15px;
+            width: 5px; height: 18px;
             background: linear-gradient(var(--electric-cyan), white);
             border-radius: 2px;
             pointer-events: none;
@@ -95,18 +95,18 @@
         }
 
         @keyframes electricity-shake {
-            0% { translate: -3px 2px; }
-            100% { translate: 3px -2px; }
+            0% { translate: -4px 3px; }
+            100% { translate: 4px -3px; }
         }
 
         @keyframes electric-glow {
-            0% { filter: drop-shadow(0 0 15px rgba(0, 210, 255, 0.6)) brightness(1); }
-            100% { filter: drop-shadow(0 0 40px rgba(0, 246, 255, 1)) brightness(1.6); }
+            0% { filter: drop-shadow(0 0 20px rgba(0, 210, 255, 0.7)) brightness(1); }
+            100% { filter: drop-shadow(0 0 50px rgba(0, 246, 255, 1)) brightness(1.7); }
         }
 
         @keyframes logo-explode {
             0% { transform: translate(-50%, -50%) scale(1); opacity: 1; filter: brightness(3); }
-            100% { transform: translate(-50%, -50%) scale(2); opacity: 0; filter: brightness(6); }
+            100% { transform: translate(-50%, -50%) scale(2.2); opacity: 0; filter: brightness(7); }
         }
 
         /* --- HEADER & NAVIGATION --- */
@@ -147,6 +147,7 @@
             text-transform: uppercase;
             letter-spacing: 1px;
             transition: color 0.3s ease;
+            cursor: pointer;
         }
 
         nav a:hover {
@@ -380,11 +381,13 @@
         </div>
         <nav>
             <ul>
-                <li><a href="#accueil">Accueil</a></li>
-                <li><a href="#services">Services</a></li>
-                <li><a href="#contact">Contact</a></li>
+                <!-- AJOUT DE LA CLASSE action-btn SUR LES LIENS DU MENU -->
+                <li><a class="action-btn" data-target="accueil">Accueil</a></li>
+                <li><a class="action-btn" data-target="services">Services</a></li>
+                <li><a class="action-btn" data-target="contact">Contact</a></li>
             </ul>
         </nav>
+        <!-- AJOUT DE LA CLASSE action-btn SUR CE BOUTON -->
         <button class="btn-contact action-btn" data-target="contact">En savoir plus</button>
     </header>
 
@@ -450,7 +453,7 @@
         <p>&copy; 2026 VOLTACS. Tous droits réservés. Électricité Résidentielle & Domotique.</p>
     </footer>
 
-    <!-- LOGIQUE MODIFIÉE POUR LE CENTRE ABSOLU DU NAVIGATEUR -->
+    <!-- LOGIQUE MODIFIÉE POUR LE LOGO GÉANT AU CENTRE -->
     <script>
         const buttons = document.querySelectorAll('.action-btn');
         const originalLogo = document.getElementById('original-logo');
@@ -484,10 +487,10 @@
                 setTimeout(() => {
                     logoClone.style.transition = 'top 0.6s cubic-bezier(0.25, 1, 0.5, 1), left 0.6s cubic-bezier(0.25, 1, 0.5, 1), transform 0.6s cubic-bezier(0.25, 1, 0.5, 1), width 0.6s cubic-bezier(0.25, 1, 0.5, 1), height 0.6s cubic-bezier(0.25, 1, 0.5, 1)';
                     
-                    const finalWidth = 360; // Légèrement plus grand pour bien apprécier les détails au milieu
-                    const finalHeight = 130; 
+                    // TAILLE FINALE GÉANTE (500px) POUR BIEN LIRE LE TEXTE
+                    const finalWidth = 500; 
+                    const finalHeight = 180; // Ratio conservé
                     
-                    // On vise le milieu vertical et horizontal absolu de l'écran visible
                     logoClone.style.top = '50vh';
                     logoClone.style.left = '50vw';
                     logoClone.style.width = finalWidth + 'px';
@@ -533,24 +536,23 @@
         });
 
         function createSparks() {
-            for (let i = 0; i < 50; i++) {
+            for (let i = 0; i < 55; i++) {
                 const spark = document.createElement('div');
                 spark.classList.add('spark');
                 overlay.appendChild(spark);
 
                 const angle = Math.random() * Math.PI * 2;
-                const distance = 130 + Math.random() * 280;
+                const distance = 150 + Math.random() * 320;
                 const destX = Math.cos(angle) * distance;
                 const destY = Math.sin(angle) * distance;
 
-                // Les étincelles jaillissent bien depuis le centre absolu de la vue (50vw, 50vh)
                 spark.style.left = '50vw';
                 spark.style.top = '50vh';
                 spark.style.transform = `translate(-50%, -50%) rotate(${angle + Math.PI/2}deg)`;
                 
                 spark.animate([
-                    { opacity: 1, height: '35px', transform: `translate(-50%, -50%) rotate(${angle + Math.PI/2}deg) translateY(0px)` },
-                    { opacity: 0, height: '4px', transform: `translate(-50%, -50%) rotate(${angle + Math.PI/2}deg) translateY(${-destY}px) translateX(${destX}px)` }
+                    { opacity: 1, height: '38px', transform: `translate(-50%, -50%) rotate(${angle + Math.PI/2}deg) translateY(0px)` },
+                    { opacity: 0, height: '5px', transform: `translate(-50%, -50%) rotate(${angle + Math.PI/2}deg) translateY(${-destY}px) translateX(${destX}px)` }
                 ], {
                     duration: 400 + Math.random() * 500,
                     easing: 'cubic-bezier(0.1, 0.8, 0.3, 1)',
