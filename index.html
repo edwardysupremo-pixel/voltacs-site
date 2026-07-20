@@ -122,15 +122,15 @@
             position: relative;
         }
 
-        /* TAILLE AJUSTÉE ICI : 750px de large */
+        /* --- LOGO GÉANT ICI : 1000px DE LARGEUR --- */
         .logo-img {
             object-fit: contain;
             position: fixed;
             z-index: 1001;
-            top: 35vh; /* Légèrement remonté pour équilibrer la hauteur */
+            top: 32vh; /* Ajusté pour centrer visuellement l'immense logo */
             left: 50vw;
-            width: 750px;  /* Modifié à 750px */
-            height: 270px; /* Modifié pour garder les proportions */
+            width: 1000px; /* Changé de 750px à 1000px (1k pixel) */
+            height: 360px; /* Proportionnel (1000 / 2.77 ratio) */
             transform: translate(-50%, -50%);
             transition: top 0.5s ease-in-out, 
                         left 0.5s ease-in-out, 
@@ -192,18 +192,18 @@
 
         /* --- HERO SECTION --- */
         .hero {
-            min-height: 95vh;
+            min-height: 98vh; /* Presque toute la hauteur */
             display: flex;
             flex-direction: column;
             justify-content: flex-end; 
             align-items: center;
             text-align: center;
-            padding: 0 20px 8vh 20px;
+            padding: 0 20px 6vh 20px; /* Moins de padding bas pour le texte */
             background: radial-gradient(circle at center, rgba(0, 210, 255, 0.04) 0%, rgba(7, 9, 14, 1) 70%);
         }
 
         .hero-title-group {
-            margin-top: 320px; /* Augmenté pour éviter la superposition avec le grand logo */
+            margin-top: 400px; /* Augmenté pour éviter la superposition avec le logo de 1000px */
         }
 
         .hero-title-group h1 {
@@ -585,13 +585,13 @@
                 originalLogo.style.opacity = '0';
                 overlay.classList.add('active');
                 
-                // FORCE LE CLONE A S'AGRANDIR À 800px AU CENTRE PENDANT L'ANIMATION ÉLECTRIQUE
+                // FORCE LE CLONE A S'AGRANDIR À 1050px AU CENTRE PENDANT L'ANIMATION ÉLECTRIQUE
                 setTimeout(() => {
                     logoClone.style.transition = 'all 0.6s cubic-bezier(0.25, 1, 0.5, 1)';
                     logoClone.style.top = '50vh';
                     logoClone.style.left = '50vw';
-                    logoClone.style.width = '800px';   
-                    logoClone.style.height = '290px';  
+                    logoClone.style.width = '1050px';   /* Légèrement plus grand pour la charge */
+                    logoClone.style.height = '378px';  /* Ajusté */
                     logoClone.style.transform = 'translate(-50%, -50%)';
                 }, 50);
 
