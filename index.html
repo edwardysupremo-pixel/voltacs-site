@@ -14,7 +14,7 @@
         }
 
         :root {
-            --bg-dark: #07090e; /* Un bleu nuit ultra sombre pour matcher avec ton logo */
+            --bg-dark: #07090e; 
             --bg-card: #0f131a;
             --text-light: #ffffff;
             --text-muted: #8e98a8;
@@ -48,33 +48,30 @@
             pointer-events: all;
         }
 
-        .animated-logo-container {
-            position: absolute;
-            transition: all 0.6s cubic-bezier(0.25, 1, 0.5, 1);
-            z-index: 10000;
-        }
-
-        /* Classes injectées par JS pendant l'animation */
-        .animated-logo-container.to-center {
+        /* CLONE DU LOGO POUR L'ANIMATION DU CENTRE */
+        .electric-clone {
             position: fixed;
-            top: 50% !important;
-            left: 50% !important;
-            transform: translate(-50%, -50%) scale(2.5);
+            z-index: 10000;
+            pointer-events: none;
+            display: none;
+            object-fit: contain;
+            /* Animation fluide combinée : déplacement au centre exact + agrandissement */
+            transition: top 0.6s cubic-bezier(0.25, 1, 0.5, 1), 
+                        left 0.6s cubic-bezier(0.25, 1, 0.5, 1), 
+                        transform 0.6s cubic-bezier(0.25, 1, 0.5, 1),
+                        width 0.6s cubic-bezier(0.25, 1, 0.5, 1),
+                        height 0.6s cubic-bezier(0.25, 1, 0.5, 1);
         }
 
-        .animated-logo-container.charging img {
+        /* Surcharge électrique (secousses + lueur) au centre */
+        .electric-clone.charging {
             animation: electricity-shake 0.1s infinite alternate, electric-glow 0.3s infinite alternate;
-            filter: drop-shadow(0 0 15px var(--electric-cyan));
+            filter: drop-shadow(0 0 20px var(--electric-cyan));
         }
 
-        .animated-logo-container.explode {
+        /* L'explosion */
+        .electric-clone.explode {
             animation: logo-explode 0.4s forwards ease-out;
-        }
-
-        .animated-logo-container.fade-back {
-            opacity: 0;
-            transform: translate(-50%, -50%) scale(0.5);
-            transition: opacity 0.4s ease, transform 0.4s ease;
         }
 
         /* Particules d'explosion */
@@ -104,12 +101,12 @@
 
         @keyframes electric-glow {
             0% { filter: drop-shadow(0 0 10px rgba(0, 210, 255, 0.6)) brightness(1); }
-            100% { filter: drop-shadow(0 0 30px rgba(0, 246, 255, 1)) brightness(1.4); }
+            100% { filter: drop-shadow(0 0 35px rgba(0, 246, 255, 1)) brightness(1.5); }
         }
 
         @keyframes logo-explode {
-            0% { transform: translate(-50%, -50%) scale(2.5); opacity: 1; filter: brightness(3); }
-            100% { transform: translate(-50%, -50%) scale(4); opacity: 0; filter: brightness(5); }
+            0% { transform: translate(-50%, -50%) scale(1); opacity: 1; filter: brightness(3); }
+            100% { transform: translate(-50%, -50%) scale(1.8); opacity: 0; filter: brightness(5); }
         }
 
         /* --- HEADER & NAVIGATION --- */
@@ -129,14 +126,12 @@
         .logo-placeholder {
             width: 140px;
             height: 50px;
-            position: relative;
         }
 
         .logo-img {
             width: 140px;
             height: 50px;
             object-fit: contain;
-            cursor: pointer;
         }
 
         nav ul {
@@ -190,10 +185,6 @@
             background: radial-gradient(circle at center, rgba(0, 210, 255, 0.04) 0%, rgba(7, 9, 14, 1) 70%);
         }
 
-        .hero-title-group {
-            margin-bottom: 25px;
-        }
-
         .hero-title-group h1 {
             font-size: 3.5rem;
             letter-spacing: 8px;
@@ -202,6 +193,7 @@
             background: linear-gradient(180deg, #ffffff 0%, #a4b3c6 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+            margin-bottom: 25px;
         }
 
         .hero p {
@@ -376,17 +368,16 @@
 </head>
 <body>
 
-    <!-- ÉLÉMENTS POUR L'ANIMATION ÉLECTRIQUE SURNATURELLE -->
+    <!-- SYSTEMES D'ANIMATIONS -->
     <div id="electricity-overlay"></div>
     <div id="flash-screen"></div>
+    <!-- Image clone invisible qui servira uniquement pour faire l'effet de zoom au centre -->
+    <img src="logo.voltacs-removebg-preview.png" alt="" id="logo-clone" class="electric-clone">
 
     <!-- NAV BAR -->
     <header>
-        <div class="logo-placeholder" id="logo-trigger-zone">
-            <!-- Ton logo PNG sans fond se place ici -->
-            <div class="animated-logo-container" id="main-logo-box">
-                <img src="logo.voltacs-removebg-preview.png" alt="VOLTACS Logo" class="logo-img" id="voltacs-logo">
-            </div>
+        <div class="logo-placeholder">
+            <img src="logo.voltacs-removebg-preview.png" alt="VOLTACS Logo" class="logo-img" id="original-logo">
         </div>
         <nav>
             <ul>
@@ -460,88 +451,101 @@
         <p>&copy; 2026 VOLTACS. Tous droits réservés. Électricité Résidentielle & Domotique.</p>
     </footer>
 
-    <!-- LOGIQUE DE L'ANIMATION SURCHARGE ET EXPLOSION SURNATURELLE -->
+    <!-- INTERACTION & TRAJECTOIRE ABSOLUE DU LOGO -->
     <script>
         const buttons = document.querySelectorAll('.action-btn');
-        const logoBox = document.getElementById('main-logo-box');
+        const originalLogo = document.getElementById('original-logo');
+        const logoClone = document.getElementById('logo-clone');
         const overlay = document.getElementById('electricity-overlay');
         const flashScreen = document.getElementById('flash-screen');
-        const triggerZone = document.getElementById('logo-trigger-zone');
 
         buttons.forEach(button => {
             button.addEventListener('click', (e) => {
                 e.preventDefault();
                 const targetId = button.getAttribute('data-target');
                 
-                // 1. Obtenir la position actuelle du coin pour figer le logo avant déplacement
-                const rect = logoBox.getBoundingClientRect();
-                logoBox.style.top = rect.top + 'px';
-                logoBox.style.left = rect.left + 'px';
+                // 1. Prendre la position exact de départ du vrai logo dans le coin
+                const origRect = originalLogo.getBoundingClientRect();
                 
-                // Activer l'assombrissement du fond
+                // Préparer le clone sur la position exacte de départ
+                logoClone.style.transition = 'none';
+                logoClone.style.top = origRect.top + 'px';
+                logoClone.style.left = origRect.left + 'px';
+                logoClone.style.width = origRect.width + 'px';
+                logoClone.style.height = origRect.height + 'px';
+                logoClone.style.transform = 'none';
+                logoClone.style.display = 'block';
+                logoClone.style.opacity = '1';
+
+                // Masquer le logo d'origine discrètement
+                originalLogo.style.opacity = '0';
+                
+                // Activer l'assombrissement du site
                 overlay.classList.add('active');
                 
-                // 2. Transférer au centre & Agrandir
+                // 2. Déplacer vers le CENTRE ABSOLU de l'écran et grandir (Taille finale 320px) en même temps
                 setTimeout(() => {
-                    logoBox.classList.add('to-center');
+                    logoClone.style.transition = 'top 0.6s cubic-bezier(0.25, 1, 0.5, 1), left 0.6s cubic-bezier(0.25, 1, 0.5, 1), transform 0.6s cubic-bezier(0.25, 1, 0.5, 1), width 0.6s cubic-bezier(0.25, 1, 0.5, 1), height 0.6s cubic-bezier(0.25, 1, 0.5, 1)';
+                    
+                    const finalWidth = 320;
+                    const finalHeight = 114; // Ratio conservé du logo original
+                    
+                    logoClone.style.top = '50%';
+                    logoClone.style.left = '50%';
+                    logoClone.style.width = finalWidth + 'px';
+                    logoClone.style.height = finalHeight + 'px';
+                    // Recentrage parfait par rapport à son propre axe au milieu de l'écran
+                    logoClone.style.transform = 'translate(-50%, -50%)';
                 }, 50);
 
-                // 3. Phase de Surcharge électrique (secousses + lueur bleue) au bout du déplacement
+                // 3. Début de la surcharge électrique (secousses rapides + néon) une fois arrivé
                 setTimeout(() => {
-                    logoBox.classList.add('charging');
+                    logoClone.classList.add('charging');
                 }, 650);
 
-                // 4. L'EXPLOSION (Après 1.8 seconde de charge)
+                // 4. L'EXPLOSION (Après surcharge)
                 setTimeout(() => {
-                    logoBox.classList.remove('charging');
-                    logoBox.classList.add('explode');
+                    logoClone.classList.remove('charging');
+                    logoClone.classList.add('explode');
                     
-                    // Déclencher le flash de lumière intense
-                    flashScreen.style.animate = "none";
+                    // Flash de lumière blanche intense
+                    flashScreen.style.transition = "none";
                     flashScreen.style.opacity = "1";
                     setTimeout(() => {
                         flashScreen.style.transition = "opacity 0.5s ease";
                         flashScreen.style.opacity = "0";
                     }, 50);
 
-                    // Générer des éclairs / étincelles de décharge tout autour
+                    // Eclatement de particules de courant
                     createSparks();
-                }, 2400);
+                }, 2200);
 
-                // 5. Renvoyer dans le coin en Fading progressif
+                // 5. Scroll de la page vers le formulaire pendant le vide
                 setTimeout(() => {
-                    logoBox.classList.remove('to-center', 'explode');
-                    logoBox.classList.add('fade-back');
-                    overlay.classList.remove('active');
-                    
-                    // Faire défiler doucement la page jusqu'à la section voulue pendant le fondu
                     document.getElementById(targetId).scrollIntoView({ behavior: 'smooth' });
-                }, 2900);
+                    overlay.classList.remove('active');
+                }, 2600);
 
-                // 6. Réinitialisation complète à sa place d'origine
+                // 6. Réapparition douce (Fading) du logo original dans son coin de départ
                 setTimeout(() => {
-                    logoBox.style.top = '';
-                    logoBox.style.left = '';
-                    logoBox.classList.remove('fade-back');
-                    // Petit effet fluide pour le retour du logo
-                    logoBox.style.opacity = '0';
-                    setTimeout(() => {
-                        logoBox.style.transition = 'opacity 0.6s ease';
-                        logoBox.style.opacity = '1';
-                    }, 50);
-                }, 3500);
+                    logoClone.style.display = 'none';
+                    logoClone.classList.remove('explode');
+                    
+                    // Faire réapparaître en fondu le logo d'origine tout en haut
+                    originalLogo.style.transition = 'opacity 0.8s ease';
+                    originalLogo.style.opacity = '1';
+                }, 3100);
             });
         });
 
-        // Fonction magique pour créer les décharges de l'explosion
         function createSparks() {
-            for (let i = 0; i < 40; i++) {
+            for (let i = 0; i < 45; i++) {
                 const spark = document.createElement('div');
                 spark.classList.add('spark');
                 overlay.appendChild(spark);
 
                 const angle = Math.random() * Math.PI * 2;
-                const distance = 100 + Math.random() * 250;
+                const distance = 120 + Math.random() * 260;
                 const destX = Math.cos(angle) * distance;
                 const destY = Math.sin(angle) * distance;
 
@@ -551,14 +555,14 @@
                 
                 spark.animate([
                     { opacity: 1, height: '30px', transform: `translate(-50%, -50%) rotate(${angle + Math.PI/2}deg) translateY(0px)` },
-                    { opacity: 0, height: '5px', transform: `translate(-50%, -50%) rotate(${angle + Math.PI/2}deg) translateY(${-destY}px) translateX(${destX}px)` }
+                    { opacity: 0, height: '4px', transform: `translate(-50%, -50%) rotate(${angle + Math.PI/2}deg) translateY(${-destY}px) translateX(${destX}px)` }
                 ], {
-                    duration: 400 + Math.random() * 400,
+                    duration: 400 + Math.random() * 450,
                     easing: 'cubic-bezier(0.1, 0.8, 0.3, 1)',
                     fill: 'forwards'
                 });
 
-                setTimeout(() => spark.remove(), 800);
+                setTimeout(() => spark.remove(), 900);
             }
         }
     </script>
