@@ -48,14 +48,14 @@
             pointer-events: all;
         }
 
-        /* CLONE DU LOGO POUR L'ANIMATION DU CENTRE */
+        /* CLONE DU LOGO FORCE AU CENTRE VISUEL DE L'ÉCRAN */
         .electric-clone {
             position: fixed;
             z-index: 10000;
             pointer-events: none;
             display: none;
             object-fit: contain;
-            /* Animation fluide combinée : déplacement au centre exact + agrandissement */
+            transform-origin: center center;
             transition: top 0.6s cubic-bezier(0.25, 1, 0.5, 1), 
                         left 0.6s cubic-bezier(0.25, 1, 0.5, 1), 
                         transform 0.6s cubic-bezier(0.25, 1, 0.5, 1),
@@ -66,7 +66,7 @@
         /* Surcharge électrique (secousses + lueur) au centre */
         .electric-clone.charging {
             animation: electricity-shake 0.1s infinite alternate, electric-glow 0.3s infinite alternate;
-            filter: drop-shadow(0 0 20px var(--electric-cyan));
+            filter: drop-shadow(0 0 25px var(--electric-cyan));
         }
 
         /* L'explosion */
@@ -95,18 +95,18 @@
         }
 
         @keyframes electricity-shake {
-            0% { translate: -2px 1px; }
-            100% { translate: 2px -1px; }
+            0% { translate: -3px 2px; }
+            100% { translate: 3px -2px; }
         }
 
         @keyframes electric-glow {
-            0% { filter: drop-shadow(0 0 10px rgba(0, 210, 255, 0.6)) brightness(1); }
-            100% { filter: drop-shadow(0 0 35px rgba(0, 246, 255, 1)) brightness(1.5); }
+            0% { filter: drop-shadow(0 0 15px rgba(0, 210, 255, 0.6)) brightness(1); }
+            100% { filter: drop-shadow(0 0 40px rgba(0, 246, 255, 1)) brightness(1.6); }
         }
 
         @keyframes logo-explode {
             0% { transform: translate(-50%, -50%) scale(1); opacity: 1; filter: brightness(3); }
-            100% { transform: translate(-50%, -50%) scale(1.8); opacity: 0; filter: brightness(5); }
+            100% { transform: translate(-50%, -50%) scale(2); opacity: 0; filter: brightness(6); }
         }
 
         /* --- HEADER & NAVIGATION --- */
@@ -371,7 +371,6 @@
     <!-- SYSTEMES D'ANIMATIONS -->
     <div id="electricity-overlay"></div>
     <div id="flash-screen"></div>
-    <!-- Image clone invisible qui servira uniquement pour faire l'effet de zoom au centre -->
     <img src="logo.voltacs-removebg-preview.png" alt="" id="logo-clone" class="electric-clone">
 
     <!-- NAV BAR -->
@@ -451,7 +450,7 @@
         <p>&copy; 2026 VOLTACS. Tous droits réservés. Électricité Résidentielle & Domotique.</p>
     </footer>
 
-    <!-- INTERACTION & TRAJECTOIRE ABSOLUE DU LOGO -->
+    <!-- LOGIQUE MODIFIÉE POUR LE CENTRE ABSOLU DU NAVIGATEUR -->
     <script>
         const buttons = document.querySelectorAll('.action-btn');
         const originalLogo = document.getElementById('original-logo');
@@ -464,10 +463,10 @@
                 e.preventDefault();
                 const targetId = button.getAttribute('data-target');
                 
-                // 1. Prendre la position exact de départ du vrai logo dans le coin
+                // Position actuelle exacte du logo dans le coin
                 const origRect = originalLogo.getBoundingClientRect();
                 
-                // Préparer le clone sur la position exacte de départ
+                // Placer le clone sur la même position de départ
                 logoClone.style.transition = 'none';
                 logoClone.style.top = origRect.top + 'px';
                 logoClone.style.left = origRect.left + 'px';
@@ -477,38 +476,35 @@
                 logoClone.style.display = 'block';
                 logoClone.style.opacity = '1';
 
-                // Masquer le logo d'origine discrètement
+                // Rendre le logo du coin invisible
                 originalLogo.style.opacity = '0';
-                
-                // Activer l'assombrissement du site
                 overlay.classList.add('active');
                 
-                // 2. Déplacer vers le CENTRE ABSOLU de l'écran et grandir (Taille finale 320px) en même temps
+                // FORCE LE DÉPLACEMENT AU CENTRE MILIEU DE LA FENÊTRE (50vw, 50vh)
                 setTimeout(() => {
                     logoClone.style.transition = 'top 0.6s cubic-bezier(0.25, 1, 0.5, 1), left 0.6s cubic-bezier(0.25, 1, 0.5, 1), transform 0.6s cubic-bezier(0.25, 1, 0.5, 1), width 0.6s cubic-bezier(0.25, 1, 0.5, 1), height 0.6s cubic-bezier(0.25, 1, 0.5, 1)';
                     
-                    const finalWidth = 320;
-                    const finalHeight = 114; // Ratio conservé du logo original
+                    const finalWidth = 360; // Légèrement plus grand pour bien apprécier les détails au milieu
+                    const finalHeight = 130; 
                     
-                    logoClone.style.top = '50%';
-                    logoClone.style.left = '50%';
+                    // On vise le milieu vertical et horizontal absolu de l'écran visible
+                    logoClone.style.top = '50vh';
+                    logoClone.style.left = '50vw';
                     logoClone.style.width = finalWidth + 'px';
                     logoClone.style.height = finalHeight + 'px';
-                    // Recentrage parfait par rapport à son propre axe au milieu de l'écran
                     logoClone.style.transform = 'translate(-50%, -50%)';
                 }, 50);
 
-                // 3. Début de la surcharge électrique (secousses rapides + néon) une fois arrivé
+                // Début de la surcharge électrique 
                 setTimeout(() => {
                     logoClone.classList.add('charging');
                 }, 650);
 
-                // 4. L'EXPLOSION (Après surcharge)
+                // L'explosion
                 setTimeout(() => {
                     logoClone.classList.remove('charging');
                     logoClone.classList.add('explode');
                     
-                    // Flash de lumière blanche intense
                     flashScreen.style.transition = "none";
                     flashScreen.style.opacity = "1";
                     setTimeout(() => {
@@ -516,22 +512,20 @@
                         flashScreen.style.opacity = "0";
                     }, 50);
 
-                    // Eclatement de particules de courant
                     createSparks();
                 }, 2200);
 
-                // 5. Scroll de la page vers le formulaire pendant le vide
+                // Lancement du défilement fluide vers le bas
                 setTimeout(() => {
                     document.getElementById(targetId).scrollIntoView({ behavior: 'smooth' });
                     overlay.classList.remove('active');
                 }, 2600);
 
-                // 6. Réapparition douce (Fading) du logo original dans son coin de départ
+                // Reset et réapparition douce du logo d'origine en haut
                 setTimeout(() => {
                     logoClone.style.display = 'none';
                     logoClone.classList.remove('explode');
                     
-                    // Faire réapparaître en fondu le logo d'origine tout en haut
                     originalLogo.style.transition = 'opacity 0.8s ease';
                     originalLogo.style.opacity = '1';
                 }, 3100);
@@ -539,30 +533,31 @@
         });
 
         function createSparks() {
-            for (let i = 0; i < 45; i++) {
+            for (let i = 0; i < 50; i++) {
                 const spark = document.createElement('div');
                 spark.classList.add('spark');
                 overlay.appendChild(spark);
 
                 const angle = Math.random() * Math.PI * 2;
-                const distance = 120 + Math.random() * 260;
+                const distance = 130 + Math.random() * 280;
                 const destX = Math.cos(angle) * distance;
                 const destY = Math.sin(angle) * distance;
 
-                spark.style.left = '50%';
-                spark.style.top = '50%';
+                // Les étincelles jaillissent bien depuis le centre absolu de la vue (50vw, 50vh)
+                spark.style.left = '50vw';
+                spark.style.top = '50vh';
                 spark.style.transform = `translate(-50%, -50%) rotate(${angle + Math.PI/2}deg)`;
                 
                 spark.animate([
-                    { opacity: 1, height: '30px', transform: `translate(-50%, -50%) rotate(${angle + Math.PI/2}deg) translateY(0px)` },
+                    { opacity: 1, height: '35px', transform: `translate(-50%, -50%) rotate(${angle + Math.PI/2}deg) translateY(0px)` },
                     { opacity: 0, height: '4px', transform: `translate(-50%, -50%) rotate(${angle + Math.PI/2}deg) translateY(${-destY}px) translateX(${destX}px)` }
                 ], {
-                    duration: 400 + Math.random() * 450,
+                    duration: 400 + Math.random() * 500,
                     easing: 'cubic-bezier(0.1, 0.8, 0.3, 1)',
                     fill: 'forwards'
                 });
 
-                setTimeout(() => spark.remove(), 900);
+                setTimeout(() => spark.remove(), 1000);
             }
         }
     </script>
