@@ -122,15 +122,14 @@
             position: relative;
         }
 
-        /* --- LOGO GÉANT ICI : 1000px DE LARGEUR --- */
         .logo-img {
             object-fit: contain;
             position: fixed;
             z-index: 1001;
-            top: 32vh; /* Ajusté pour centrer visuellement l'immense logo */
+            top: 32vh; 
             left: 50vw;
-            width: 1000px; /* Changé de 750px à 1000px (1k pixel) */
-            height: 360px; /* Proportionnel (1000 / 2.77 ratio) */
+            width: 1000px; 
+            height: 360px; 
             transform: translate(-50%, -50%);
             transition: top 0.5s ease-in-out, 
                         left 0.5s ease-in-out, 
@@ -192,18 +191,18 @@
 
         /* --- HERO SECTION --- */
         .hero {
-            min-height: 98vh; /* Presque toute la hauteur */
+            min-height: 98vh; 
             display: flex;
             flex-direction: column;
             justify-content: flex-end; 
             align-items: center;
             text-align: center;
-            padding: 0 20px 6vh 20px; /* Moins de padding bas pour le texte */
+            padding: 0 20px 6vh 20px; 
             background: radial-gradient(circle at center, rgba(0, 210, 255, 0.04) 0%, rgba(7, 9, 14, 1) 70%);
         }
 
         .hero-title-group {
-            margin-top: 400px; /* Augmenté pour éviter la superposition avec le logo de 1000px */
+            margin-top: 400px; 
         }
 
         .hero-title-group h1 {
@@ -539,7 +538,7 @@
         <p>&copy; 2026 VOLTACS. Ingénierie Électrique & Domotique. Tous droits réservés.</p>
     </footer>
 
-    <!-- LOGIQUE DE SCROLL DE LA FENÊTRE + ANIMATION BOUTON -->
+    <!-- LOGIQUE D'ANIMATION ET SCROLL SIMULTANÉ -->
     <script>
         const originalLogo = document.getElementById('original-logo');
         const logoClone = document.getElementById('logo-clone');
@@ -585,20 +584,25 @@
                 originalLogo.style.opacity = '0';
                 overlay.classList.add('active');
                 
-                // FORCE LE CLONE A S'AGRANDIR À 1050px AU CENTRE PENDANT L'ANIMATION ÉLECTRIQUE
+                // 1. DÉROULEMENT IMMÉDIAT EN ARRIÈRE-PLAN
+                document.getElementById(targetId).scrollIntoView({ behavior: 'smooth' });
+
+                // Le clone vient se positionner au centre de la zone de vision actuelle pendant le scroll
                 setTimeout(() => {
                     logoClone.style.transition = 'all 0.6s cubic-bezier(0.25, 1, 0.5, 1)';
                     logoClone.style.top = '50vh';
                     logoClone.style.left = '50vw';
-                    logoClone.style.width = '1050px';   /* Légèrement plus grand pour la charge */
-                    logoClone.style.height = '378px';  /* Ajusté */
+                    logoClone.style.width = '1050px';   
+                    logoClone.style.height = '378px';  
                     logoClone.style.transform = 'translate(-50%, -50%)';
                 }, 50);
 
+                // Charge électrique
                 setTimeout(() => {
                     logoClone.classList.add('charging');
                 }, 650);
 
+                // 2. EXPLOSION DIRECTE SUR LA PAGE SOUHAITÉE
                 setTimeout(() => {
                     logoClone.classList.remove('charging');
                     logoClone.classList.add('explode');
@@ -611,20 +615,18 @@
                     }, 50);
 
                     createSparks();
+                    // On retire l'overlay sombre pour révéler instantanément la page finale
+                    overlay.classList.remove('active');
                 }, 2200);
 
-                setTimeout(() => {
-                    document.getElementById(targetId).scrollIntoView({ behavior: 'smooth' });
-                    overlay.classList.remove('active');
-                }, 2600);
-
+                // Nettoyage des éléments d'animation
                 setTimeout(() => {
                     logoClone.style.display = 'none';
                     logoClone.classList.remove('explode');
                     
                     originalLogo.style.transition = 'opacity 0.8s ease';
                     originalLogo.style.opacity = '1';
-                }, 3100);
+                }, 2700);
             });
         });
 
