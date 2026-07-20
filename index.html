@@ -14,11 +14,13 @@
         }
 
         :root {
-            --bg-dark: #0a0b0d;
-            --bg-card: #121418;
+            --bg-dark: #07090e; /* Un bleu nuit ultra sombre pour matcher avec ton logo */
+            --bg-card: #0f131a;
             --text-light: #ffffff;
-            --text-muted: #a0a5b0;
-            --border-color: #242730;
+            --text-muted: #8e98a8;
+            --border-color: #1e2633;
+            --electric-blue: #00d2ff;
+            --electric-cyan: #00f6ff;
         }
 
         body {
@@ -28,6 +30,88 @@
             overflow-x: hidden;
         }
 
+        /* --- OVERLAY ANIMATION LOGO --- */
+        #electricity-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100vw; height: 100vh;
+            pointer-events: none;
+            z-index: 9999;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: rgba(7, 9, 14, 0);
+            transition: background 0.4s ease;
+        }
+
+        #electricity-overlay.active {
+            background: rgba(7, 9, 14, 0.75);
+            pointer-events: all;
+        }
+
+        .animated-logo-container {
+            position: absolute;
+            transition: all 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+            z-index: 10000;
+        }
+
+        /* Classes injectées par JS pendant l'animation */
+        .animated-logo-container.to-center {
+            position: fixed;
+            top: 50% !important;
+            left: 50% !important;
+            transform: translate(-50%, -50%) scale(2.5);
+        }
+
+        .animated-logo-container.charging img {
+            animation: electricity-shake 0.1s infinite alternate, electric-glow 0.3s infinite alternate;
+            filter: drop-shadow(0 0 15px var(--electric-cyan));
+        }
+
+        .animated-logo-container.explode {
+            animation: logo-explode 0.4s forwards ease-out;
+        }
+
+        .animated-logo-container.fade-back {
+            opacity: 0;
+            transform: translate(-50%, -50%) scale(0.5);
+            transition: opacity 0.4s ease, transform 0.4s ease;
+        }
+
+        /* Particules d'explosion */
+        .spark {
+            position: absolute;
+            width: 4px; height: 15px;
+            background: linear-gradient(var(--electric-cyan), white);
+            border-radius: 2px;
+            pointer-events: none;
+            opacity: 0;
+        }
+
+        /* Écran flash blanc/bleu au moment de l'explosion */
+        #flash-screen {
+            position: fixed;
+            top:0; left:0; width:100%; height:100%;
+            background: white;
+            z-index: 10001;
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        @keyframes electricity-shake {
+            0% { translate: -2px 1px; }
+            100% { translate: 2px -1px; }
+        }
+
+        @keyframes electric-glow {
+            0% { filter: drop-shadow(0 0 10px rgba(0, 210, 255, 0.6)) brightness(1); }
+            100% { filter: drop-shadow(0 0 30px rgba(0, 246, 255, 1)) brightness(1.4); }
+        }
+
+        @keyframes logo-explode {
+            0% { transform: translate(-50%, -50%) scale(2.5); opacity: 1; filter: brightness(3); }
+            100% { transform: translate(-50%, -50%) scale(4); opacity: 0; filter: brightness(5); }
+        }
+
         /* --- HEADER & NAVIGATION --- */
         header {
             display: flex;
@@ -35,22 +119,24 @@
             align-items: center;
             padding: 20px 8%;
             border-bottom: 1px solid var(--border-color);
-            background-color: rgba(10, 11, 13, 0.95);
+            background-color: rgba(7, 9, 14, 0.95);
             position: sticky;
             top: 0;
             z-index: 1000;
             backdrop-filter: blur(5px);
         }
 
-        .logo-container {
-            display: flex;
-            align-items: center;
-            gap: 15px;
+        .logo-placeholder {
+            width: 140px;
+            height: 50px;
+            position: relative;
         }
 
         .logo-img {
+            width: 140px;
             height: 50px;
             object-fit: contain;
+            cursor: pointer;
         }
 
         nav ul {
@@ -89,42 +175,39 @@
         .btn-contact:hover {
             background-color: var(--text-light);
             color: var(--bg-dark);
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
         }
 
         /* --- HERO SECTION --- */
         .hero {
-            min-height: 80vh;
+            min-height: 75vh;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             text-align: center;
             padding: 0 20px;
-            background: radial-gradient(circle at center, rgba(255,255,255,0.03) 0%, rgba(10,11,13,1) 70%);
-            position: relative;
+            background: radial-gradient(circle at center, rgba(0, 210, 255, 0.04) 0%, rgba(7, 9, 14, 1) 70%);
         }
 
-        .hero::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background-image: linear-gradient(rgba(36, 39, 48, 0.1) 1px, transparent 1px),
-                              linear-gradient(90deg, rgba(36, 39, 48, 0.1) 1px, transparent 1px);
-            background-size: 40px 40px;
-            z-index: -1;
+        .hero-title-group {
+            margin-bottom: 25px;
         }
 
-        .hero-big-logo {
-            width: 320px; /* Taille idéale pour afficher ton logo textuel complet au centre */
-            max-width: 90%;
-            height: auto;
-            margin-bottom: 30px;
+        .hero-title-group h1 {
+            font-size: 3.5rem;
+            letter-spacing: 8px;
+            font-weight: 800;
+            text-transform: uppercase;
+            background: linear-gradient(180deg, #ffffff 0%, #a4b3c6 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
         .hero p {
             color: var(--text-muted);
-            font-size: 1.2rem;
-            letter-spacing: 3px;
+            font-size: 1.1rem;
+            letter-spacing: 4px;
             text-transform: uppercase;
             margin-bottom: 40px;
             max-width: 600px;
@@ -146,13 +229,12 @@
 
         .hero-cta:hover {
             transform: translateY(-2px);
-            box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
+            box-shadow: 0 0 25px rgba(255, 255, 255, 0.3);
         }
 
         /* --- SERVICES SECTION --- */
         .services {
             padding: 100px 8%;
-            background-color: var(--bg-dark);
         }
 
         .section-title {
@@ -161,7 +243,6 @@
             letter-spacing: 3px;
             margin-bottom: 60px;
             text-align: center;
-            position: relative;
         }
 
         .section-title::after {
@@ -183,30 +264,25 @@
             background-color: var(--bg-card);
             border: 1px solid var(--border-color);
             padding: 40px;
-            transition: all 0.3s ease;
+            transition: all 0.4s ease;
             position: relative;
-        }
-
-        .service-card::before {
-            content: '';
-            position: absolute;
-            top: -1px; right: -1px;
-            border-width: 0 16px 16px 0;
-            border-style: solid;
-            border-color: var(--bg-dark) var(--bg-dark) transparent transparent;
-            display: block;
-            width: 0;
+            cursor: pointer;
         }
 
         .service-card:hover {
-            border-color: var(--text-light);
+            border-color: var(--electric-blue);
             transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 210, 255, 0.1);
         }
 
         .service-icon {
             font-size: 2.5rem;
             margin-bottom: 20px;
-            color: var(--text-light);
+            transition: transform 0.3s ease;
+        }
+
+        .service-card:hover .service-icon {
+            transform: scale(1.1);
         }
 
         .service-card h3 {
@@ -258,7 +334,7 @@
 
         .form-group input:focus, .form-group textarea:focus {
             outline: none;
-            border-color: var(--text-light);
+            border-color: var(--electric-blue);
         }
 
         .btn-submit {
@@ -291,26 +367,26 @@
             letter-spacing: 1px;
         }
 
-        /* --- RESPONSIVE DESIGN --- */
         @media (max-width: 768px) {
-            header {
-                flex-direction: column;
-                gap: 20px;
-                padding: 20px;
-            }
-            nav ul {
-                gap: 15px;
-            }
+            header { flex-direction: column; gap: 20px; padding: 20px; }
+            nav ul { gap: 15px; }
+            .hero-title-group h1 { font-size: 2.5rem; }
         }
     </style>
 </head>
 <body>
 
+    <!-- ÉLÉMENTS POUR L'ANIMATION ÉLECTRIQUE SURNATURELLE -->
+    <div id="electricity-overlay"></div>
+    <div id="flash-screen"></div>
+
     <!-- NAV BAR -->
     <header>
-        <div class="logo-container">
-            <!-- Lien mis à jour pour chercher directement ton fichier sur GitHub -->
-            <img src="logo.voltacs.jpg" alt="VOLTACS Logo" class="logo-img">
+        <div class="logo-placeholder" id="logo-trigger-zone">
+            <!-- Ton logo PNG sans fond se place ici -->
+            <div class="animated-logo-container" id="main-logo-box">
+                <img src="logo.voltacs-removebg-preview.png" alt="VOLTACS Logo" class="logo-img" id="voltacs-logo">
+            </div>
         </div>
         <nav>
             <ul>
@@ -319,15 +395,16 @@
                 <li><a href="#contact">Contact</a></li>
             </ul>
         </nav>
-        <button class="btn-contact" onclick="document.getElementById('contact').scrollIntoView({behavior: 'smooth'});">En savoir plus</button>
+        <button class="btn-contact action-btn" data-target="contact">En savoir plus</button>
     </header>
 
     <!-- HERO SECTION -->
     <section class="hero" id="accueil">
-        <!-- Ton logo s'affiche en grand au centre de la page d'accueil -->
-        <img src="logo.voltacs.jpg" alt="VOLTACS" class="hero-big-logo">
+        <div class="hero-title-group">
+            <h1>VOLTACS</h1>
+        </div>
         <p>Électricité Résidentielle & Domotique</p>
-        <button class="hero-cta" onclick="document.getElementById('contact').scrollIntoView({behavior: 'smooth'});">Demander un devis</button>
+        <button class="hero-cta action-btn" data-target="contact">Demander un devis</button>
     </section>
 
     <!-- SERVICES SECTION -->
@@ -335,19 +412,19 @@
         <h2 class="section-title">Nos Domaines d'Expertise</h2>
         <div class="services-grid">
             
-            <div class="service-card">
+            <div class="service-card action-btn" data-target="contact">
                 <div class="service-icon">⚡</div>
                 <h3>Électricité Résidentielle</h3>
                 <p>Installation complète, mise en conformité, tableaux électriques et rénovation de vos réseaux pour une sécurité et une fiabilité absolues.</p>
             </div>
 
-            <div class="service-card">
+            <div class="service-card action-btn" data-target="contact">
                 <div class="service-icon">🤖</div>
                 <h3>Domotique Intégrée</h3>
                 <p>Automatisation intelligente de votre habitat : gestion de l'éclairage, des ouvrants, du chauffage et scénarios personnalisés pour un confort moderne.</p>
             </div>
 
-            <div class="service-card">
+            <div class="service-card action-btn" data-target="contact">
                 <div class="service-icon">🛡️</div>
                 <h3>Sécurité & Réseaux</h3>
                 <p>Solutions connectées de contrôle d'accès, caméras de surveillance et câblage réseau VDI pour une maison entièrement sécurisée et interconnectée.</p>
@@ -360,7 +437,7 @@
     <section class="contact" id="contact">
         <h2 class="section-title">Un projet ? Contactez-nous</h2>
         <div class="contact-container">
-            <form onsubmit="event.preventDefault(); alert('Message envoyé avec succès ! (Simulation)');">
+            <form onsubmit="event.preventDefault(); alert('Message envoyé avec succès !');">
                 <div class="form-group">
                     <label for="name">Nom / Entreprise</label>
                     <input type="text" id="name" required autocomplete="name">
@@ -383,5 +460,107 @@
         <p>&copy; 2026 VOLTACS. Tous droits réservés. Électricité Résidentielle & Domotique.</p>
     </footer>
 
+    <!-- LOGIQUE DE L'ANIMATION SURCHARGE ET EXPLOSION SURNATURELLE -->
+    <script>
+        const buttons = document.querySelectorAll('.action-btn');
+        const logoBox = document.getElementById('main-logo-box');
+        const overlay = document.getElementById('electricity-overlay');
+        const flashScreen = document.getElementById('flash-screen');
+        const triggerZone = document.getElementById('logo-trigger-zone');
+
+        buttons.forEach(button => {
+            button.addEventListener('click', (e) => {
+                e.preventDefault();
+                const targetId = button.getAttribute('data-target');
+                
+                // 1. Obtenir la position actuelle du coin pour figer le logo avant déplacement
+                const rect = logoBox.getBoundingClientRect();
+                logoBox.style.top = rect.top + 'px';
+                logoBox.style.left = rect.left + 'px';
+                
+                // Activer l'assombrissement du fond
+                overlay.classList.add('active');
+                
+                // 2. Transférer au centre & Agrandir
+                setTimeout(() => {
+                    logoBox.classList.add('to-center');
+                }, 50);
+
+                // 3. Phase de Surcharge électrique (secousses + lueur bleue) au bout du déplacement
+                setTimeout(() => {
+                    logoBox.classList.add('charging');
+                }, 650);
+
+                // 4. L'EXPLOSION (Après 1.8 seconde de charge)
+                setTimeout(() => {
+                    logoBox.classList.remove('charging');
+                    logoBox.classList.add('explode');
+                    
+                    // Déclencher le flash de lumière intense
+                    flashScreen.style.animate = "none";
+                    flashScreen.style.opacity = "1";
+                    setTimeout(() => {
+                        flashScreen.style.transition = "opacity 0.5s ease";
+                        flashScreen.style.opacity = "0";
+                    }, 50);
+
+                    // Générer des éclairs / étincelles de décharge tout autour
+                    createSparks();
+                }, 2400);
+
+                // 5. Renvoyer dans le coin en Fading progressif
+                setTimeout(() => {
+                    logoBox.classList.remove('to-center', 'explode');
+                    logoBox.classList.add('fade-back');
+                    overlay.classList.remove('active');
+                    
+                    // Faire défiler doucement la page jusqu'à la section voulue pendant le fondu
+                    document.getElementById(targetId).scrollIntoView({ behavior: 'smooth' });
+                }, 2900);
+
+                // 6. Réinitialisation complète à sa place d'origine
+                setTimeout(() => {
+                    logoBox.style.top = '';
+                    logoBox.style.left = '';
+                    logoBox.classList.remove('fade-back');
+                    // Petit effet fluide pour le retour du logo
+                    logoBox.style.opacity = '0';
+                    setTimeout(() => {
+                        logoBox.style.transition = 'opacity 0.6s ease';
+                        logoBox.style.opacity = '1';
+                    }, 50);
+                }, 3500);
+            });
+        });
+
+        // Fonction magique pour créer les décharges de l'explosion
+        function createSparks() {
+            for (let i = 0; i < 40; i++) {
+                const spark = document.createElement('div');
+                spark.classList.add('spark');
+                overlay.appendChild(spark);
+
+                const angle = Math.random() * Math.PI * 2;
+                const distance = 100 + Math.random() * 250;
+                const destX = Math.cos(angle) * distance;
+                const destY = Math.sin(angle) * distance;
+
+                spark.style.left = '50%';
+                spark.style.top = '50%';
+                spark.style.transform = `translate(-50%, -50%) rotate(${angle + Math.PI/2}deg)`;
+                
+                spark.animate([
+                    { opacity: 1, height: '30px', transform: `translate(-50%, -50%) rotate(${angle + Math.PI/2}deg) translateY(0px)` },
+                    { opacity: 0, height: '5px', transform: `translate(-50%, -50%) rotate(${angle + Math.PI/2}deg) translateY(${-destY}px) translateX(${destX}px)` }
+                ], {
+                    duration: 400 + Math.random() * 400,
+                    easing: 'cubic-bezier(0.1, 0.8, 0.3, 1)',
+                    fill: 'forwards'
+                });
+
+                setTimeout(() => spark.remove(), 800);
+            }
+        }
+    </script>
 </body>
 </html>
