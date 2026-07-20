@@ -21,6 +21,7 @@
             --border-color: #1e2633;
             --electric-blue: #00d2ff;
             --electric-cyan: #00f6ff;
+            --section-padding: 100px 8%;
         }
 
         body {
@@ -30,7 +31,7 @@
             overflow-x: hidden;
         }
 
-        /* --- OVERLAY ANIMATION LOGO --- */
+        /* --- SYSTEME D'ANIMATION ÉLECTRIQUE DU LOGO --- */
         #electricity-overlay {
             position: fixed;
             top: 0; left: 0; width: 100vw; height: 100vh;
@@ -48,7 +49,6 @@
             pointer-events: all;
         }
 
-        /* CLONE DU LOGO FORCE AU CENTRE VISUEL DE L'ÉCRAN */
         .electric-clone {
             position: fixed;
             z-index: 10000;
@@ -63,18 +63,15 @@
                         height 0.6s cubic-bezier(0.25, 1, 0.5, 1);
         }
 
-        /* Surcharge électrique (secousses + lueur) au centre */
         .electric-clone.charging {
             animation: electricity-shake 0.1s infinite alternate, electric-glow 0.3s infinite alternate;
             filter: drop-shadow(0 0 30px var(--electric-cyan));
         }
 
-        /* L'explosion */
         .electric-clone.explode {
             animation: logo-explode 0.4s forwards ease-out;
         }
 
-        /* Particules d'explosion */
         .spark {
             position: absolute;
             width: 5px; height: 18px;
@@ -84,7 +81,6 @@
             opacity: 0;
         }
 
-        /* Écran flash blanc/bleu au moment de l'explosion */
         #flash-screen {
             position: fixed;
             top:0; left:0; width:100%; height:100%;
@@ -176,7 +172,7 @@
 
         /* --- HERO SECTION --- */
         .hero {
-            min-height: 75vh;
+            min-height: 85vh;
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -187,8 +183,8 @@
         }
 
         .hero-title-group h1 {
-            font-size: 3.5rem;
-            letter-spacing: 8px;
+            font-size: 4rem;
+            letter-spacing: 10px;
             font-weight: 800;
             text-transform: uppercase;
             background: linear-gradient(180deg, #ffffff 0%, #a4b3c6 100%);
@@ -199,17 +195,17 @@
 
         .hero p {
             color: var(--text-muted);
-            font-size: 1.1rem;
-            letter-spacing: 4px;
+            font-size: 1.2rem;
+            letter-spacing: 5px;
             text-transform: uppercase;
-            margin-bottom: 40px;
-            max-width: 600px;
+            margin-bottom: 50px;
+            max-width: 700px;
         }
 
         .hero-cta {
             background-color: var(--text-light);
             color: var(--bg-dark);
-            padding: 15px 40px;
+            padding: 18px 45px;
             font-size: 1rem;
             font-weight: 700;
             text-transform: uppercase;
@@ -222,18 +218,14 @@
 
         .hero-cta:hover {
             transform: translateY(-2px);
-            box-shadow: 0 0 25px rgba(255, 255, 255, 0.3);
+            box-shadow: 0 0 30px rgba(255, 255, 255, 0.3);
         }
 
-        /* --- SERVICES SECTION --- */
-        .services {
-            padding: 100px 8%;
-        }
-
+        /* --- SECTION TITLES --- */
         .section-title {
-            font-size: 2rem;
+            font-size: 2.2rem;
             text-transform: uppercase;
-            letter-spacing: 3px;
+            letter-spacing: 4px;
             margin-bottom: 60px;
             text-align: center;
         }
@@ -241,48 +233,95 @@
         .section-title::after {
             content: '';
             display: block;
-            width: 50px;
+            width: 60px;
             height: 3px;
-            background-color: var(--text-light);
-            margin: 15px auto 0 auto;
+            background-color: var(--electric-cyan);
+            margin: 18px auto 0 auto;
+        }
+
+        /* --- PROUESSES (SAVOIR PLUS) SECTION --- */
+        .prouesses {
+            padding: var(--section-padding);
+            background-color: var(--bg-card);
+            border-top: 1px solid var(--border-color);
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .prouesses-content {
+            max-width: 900px;
+            margin: 0 auto;
+            color: var(--text-muted);
+            font-size: 1.05rem;
+            line-height: 1.8;
+        }
+
+        .prouesses-content p {
+            margin-bottom: 25px;
+        }
+
+        .prouesses-highlight {
+            color: var(--text-light);
+            font-weight: 600;
+        }
+
+        .prouesses-list {
+            list-style: none;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin-top: 40px;
+        }
+
+        .prouesses-item {
+            background-color: rgba(0, 0, 0, 0.2);
+            padding: 20px;
+            border-left: 2px solid var(--electric-blue);
+        }
+
+        .prouesses-item strong {
+            color: var(--text-light);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 0.95rem;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        /* --- SERVICES SECTION --- */
+        .services {
+            padding: var(--section-padding);
         }
 
         .services-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
             gap: 40px;
         }
 
         .service-card {
             background-color: var(--bg-card);
             border: 1px solid var(--border-color);
-            padding: 40px;
+            padding: 50px;
             transition: all 0.4s ease;
-            position: relative;
             cursor: pointer;
         }
 
         .service-card:hover {
             border-color: var(--electric-blue);
             transform: translateY(-5px);
-            box-shadow: 0 10px 30px rgba(0, 210, 255, 0.1);
+            box-shadow: 0 10px 40px rgba(0, 210, 255, 0.1);
         }
 
         .service-icon {
-            font-size: 2.5rem;
-            margin-bottom: 20px;
-            transition: transform 0.3s ease;
-        }
-
-        .service-card:hover .service-icon {
-            transform: scale(1.1);
+            font-size: 2.8rem;
+            margin-bottom: 25px;
         }
 
         .service-card h3 {
-            font-size: 1.4rem;
+            font-size: 1.5rem;
             text-transform: uppercase;
             letter-spacing: 1px;
-            margin-bottom: 15px;
+            margin-bottom: 18px;
         }
 
         .service-card p {
@@ -292,13 +331,13 @@
 
         /* --- CONTACT SECTION --- */
         .contact {
-            padding: 100px 8%;
+            padding: var(--section-padding);
             background-color: var(--bg-card);
             border-top: 1px solid var(--border-color);
         }
 
         .contact-container {
-            max-width: 600px;
+            max-width: 650px;
             margin: 0 auto;
         }
 
@@ -319,7 +358,7 @@
             width: 100%;
             background-color: var(--bg-dark);
             border: 1px solid var(--border-color);
-            padding: 12px 15px;
+            padding: 15px;
             color: var(--text-light);
             font-size: 1rem;
             transition: border-color 0.3s;
@@ -334,24 +373,19 @@
             width: 100%;
             background-color: var(--text-light);
             color: var(--bg-dark);
-            padding: 15px;
+            padding: 18px;
             font-size: 1rem;
             font-weight: 700;
             text-transform: uppercase;
             border: none;
             letter-spacing: 2px;
             cursor: pointer;
-            transition: background-color 0.3s;
             clip-path: polygon(15px 0%, 100% 0%, calc(100% - 15px) 100%, 0% 100%);
-        }
-
-        .btn-submit:hover {
-            background-color: var(--text-muted);
         }
 
         /* --- FOOTER --- */
         footer {
-            padding: 40px 8%;
+            padding: 50px 8%;
             background-color: var(--bg-dark);
             border-top: 1px solid var(--border-color);
             text-align: center;
@@ -360,10 +394,12 @@
             letter-spacing: 1px;
         }
 
+        /* --- RESPONSIVE --- */
         @media (max-width: 768px) {
-            header { flex-direction: column; gap: 20px; padding: 20px; }
-            nav ul { gap: 15px; }
-            .hero-title-group h1 { font-size: 2.5rem; }
+            header { flex-direction: column; gap: 20px; padding: 20px; text-align: center; }
+            nav ul { gap: 15px; flex-wrap: wrap; justify-content: center; }
+            .hero-title-group h1 { font-size: 2.8rem; letter-spacing: 6px; }
+            .hero p { font-size: 1rem; letter-spacing: 3px; }
         }
     </style>
 </head>
@@ -381,14 +417,14 @@
         </div>
         <nav>
             <ul>
-                <!-- AJOUT DE LA CLASSE action-btn SUR LES LIENS DU MENU -->
                 <li><a class="action-btn" data-target="accueil">Accueil</a></li>
-                <li><a class="action-btn" data-target="services">Services</a></li>
-                <li><a class="action-btn" data-target="contact">Contact</a></li>
+                <!-- On change la cible de Services et Contact pour inclure la nouvelle section -->
+                <li><a class="action-btn" data-target="prouesses">Qui sommes-nous</a></li>
+                <li><a class="action-btn" data-target="services">Expertises</a></li>
+                <li><a class="action-btn" data-target="contact">Devenir Client</a></li>
             </ul>
         </nav>
-        <!-- AJOUT DE LA CLASSE action-btn SUR CE BOUTON -->
-        <button class="btn-contact action-btn" data-target="contact">En savoir plus</button>
+        <button class="btn-contact action-btn" data-target="prouesses">En savoir plus</button>
     </header>
 
     <!-- HERO SECTION -->
@@ -396,51 +432,76 @@
         <div class="hero-title-group">
             <h1>VOLTACS</h1>
         </div>
-        <p>Électricité Résidentielle & Domotique</p>
-        <button class="hero-cta action-btn" data-target="contact">Demander un devis</button>
+        <p>Électricité Résidentielle & Domotique d'Excellence</p>
+        <button class="hero-cta action-btn" data-target="contact">Votre Devis en 48h</button>
+    </section>
+
+    <!-- PROUESSES (QUI SOMMES-NOUS) SECTION - NOUVELLE SECTION ADAPTÉE -->
+    <section class="prouesses" id="prouesses">
+        <h2 class="section-title">VOLTACS : L'Expert derrière le Courant</h2>
+        <div class="prouesses-content">
+            <p><span class="prouesses-highlight">Fondée par un électricien-domoticien passionné et ultra-qualifié</span>, VOLTACS n'est pas une simple entreprise d'électricité, c'est la garantie d'une ingénierie de précision pour votre habitat. Je ne fais pas que tirer des câbles ; je conçois des systèmes énergétiques sûrs, intelligents et invisibles.</p>
+            
+            <p>Mon parcours est forgé par <span class="prouesses-highlight">plusieurs années d'interventions techniques</span> complexes et de chantiers de prestige, me permettant de maîtriser les normes de sécurité les plus strictes. Mes prouesses ne résident pas dans la théorie, mais dans ma capacité à résoudre les problématiques les plus pointues de l'habitat moderne.</p>
+            
+            <ul class="prouesses-list">
+                <li class="prouesses-item">
+                    <strong>Certification & Sécurité</strong>
+                    Maîtrise totale des normes RGIE pour des installations 100% conformes et certifiées.
+                </li>
+                <li class="prouesses-item">
+                    <strong>Conception Domotique</strong>
+                    Ingénierie sur-mesure de scénarios KNX/Loxone pour un confort automatisé haut de gamme.
+                </li>
+                <li class="prouesses-item">
+                    <strong>Diagnostic de Précision</strong>
+                    Capacité à identifier et résoudre instantanément des pannes complexes sur des réseaux saturés.
+                </li>
+                <li class="prouesses-item">
+                    <strong>Rénovation Haute-Couture</strong>
+                    Intégration d'éclairage LED architectural et de tableaux électriques modernes dans des structures anciennes.
+                </li>
+            </ul>
+        </div>
     </section>
 
     <!-- SERVICES SECTION -->
     <section class="services" id="services">
         <h2 class="section-title">Nos Domaines d'Expertise</h2>
         <div class="services-grid">
-            
             <div class="service-card action-btn" data-target="contact">
                 <div class="service-icon">⚡</div>
-                <h3>Électricité Résidentielle</h3>
-                <p>Installation complète, mise en conformité, tableaux électriques et rénovation de vos réseaux pour une sécurité et une fiabilité absolues.</p>
+                <h3>Réseaux Résidentiels</h3>
+                <p>Installation complète, mise en conformité RGIE, tableaux divisionnaires de puissance et rénovation pour une sécurité absolue de vos biens et personnes.</p>
             </div>
-
             <div class="service-card action-btn" data-target="contact">
                 <div class="service-icon">🤖</div>
                 <h3>Domotique Intégrée</h3>
-                <p>Automatisation intelligente de votre habitat : gestion de l'éclairage, des ouvrants, du chauffage et scénarios personnalisés pour un confort moderne.</p>
+                <p>Automatisation intelligente (éclairage, chauffage, ouvrants, audio) et conception de scénarios personnalisés pour un habitat autonome et connecté.</p>
             </div>
-
             <div class="service-card action-btn" data-target="contact">
                 <div class="service-icon">🛡️</div>
-                <h3>Sécurité & Réseaux</h3>
-                <p>Solutions connectées de contrôle d'accès, caméras de surveillance et câblage réseau VDI pour une maison entièrement sécurisée et interconnectée.</p>
+                <h3>Sécurité & IP</h3>
+                <p>Contrôle d'accès, vidéophonie IP connectée, caméras de surveillance et réseaux VDI pour une maison entièrement sécurisée et interconnectée.</p>
             </div>
-
         </div>
     </section>
 
     <!-- CONTACT SECTION -->
     <section class="contact" id="contact">
-        <h2 class="section-title">Un projet ? Contactez-nous</h2>
+        <h2 class="section-title">Planifions votre projet</h2>
         <div class="contact-container">
-            <form onsubmit="event.preventDefault(); alert('Message envoyé avec succès !');">
+            <form onsubmit="event.preventDefault(); alert('Merci ! VOLTACS vous recontactera sous 48h.');">
                 <div class="form-group">
-                    <label for="name">Nom / Entreprise</label>
+                    <label for="name">Votre Nom / Entreprise</label>
                     <input type="text" id="name" required autocomplete="name">
                 </div>
                 <div class="form-group">
-                    <label for="email">Adresse E-mail</label>
+                    <label for="email">Adresse E-mail Professionnelle</label>
                     <input type="email" id="email" required autocomplete="email">
                 </div>
                 <div class="form-group">
-                    <label for="message">Votre Projet (Rénovation, Neuf, Domotique...)</label>
+                    <label for="message">Décrivez votre projet technique (Rénovation, Neuf, KNX, etc.)</label>
                     <textarea id="message" rows="5" required></textarea>
                 </div>
                 <button type="submit" class="btn-submit">Envoyer la demande</button>
@@ -450,10 +511,10 @@
 
     <!-- FOOTER -->
     <footer>
-        <p>&copy; 2026 VOLTACS. Tous droits réservés. Électricité Résidentielle & Domotique.</p>
+        <p>&copy; 2026 VOLTACS. Ingénierie Électrique & Domotique. Tous droits réservés.</p>
     </footer>
 
-    <!-- LOGIQUE MODIFIÉE POUR LE LOGO GÉANT AU CENTRE -->
+    <!-- LOGIQUE DE L'ANIMATION LOGO GÉANT AU CENTRE -->
     <script>
         const buttons = document.querySelectorAll('.action-btn');
         const originalLogo = document.getElementById('original-logo');
@@ -466,10 +527,8 @@
                 e.preventDefault();
                 const targetId = button.getAttribute('data-target');
                 
-                // Position actuelle exacte du logo dans le coin
                 const origRect = originalLogo.getBoundingClientRect();
                 
-                // Placer le clone sur la même position de départ
                 logoClone.style.transition = 'none';
                 logoClone.style.top = origRect.top + 'px';
                 logoClone.style.left = origRect.left + 'px';
@@ -479,17 +538,14 @@
                 logoClone.style.display = 'block';
                 logoClone.style.opacity = '1';
 
-                // Rendre le logo du coin invisible
                 originalLogo.style.opacity = '0';
                 overlay.classList.add('active');
                 
-                // FORCE LE DÉPLACEMENT AU CENTRE MILIEU DE LA FENÊTRE (50vw, 50vh)
                 setTimeout(() => {
-                    logoClone.style.transition = 'top 0.6s cubic-bezier(0.25, 1, 0.5, 1), left 0.6s cubic-bezier(0.25, 1, 0.5, 1), transform 0.6s cubic-bezier(0.25, 1, 0.5, 1), width 0.6s cubic-bezier(0.25, 1, 0.5, 1), height 0.6s cubic-bezier(0.25, 1, 0.5, 1)';
+                    logoClone.style.transition = 'all 0.6s cubic-bezier(0.25, 1, 0.5, 1)';
                     
-                    // TAILLE FINALE GÉANTE (500px) POUR BIEN LIRE LE TEXTE
                     const finalWidth = 500; 
-                    const finalHeight = 180; // Ratio conservé
+                    const finalHeight = 180; 
                     
                     logoClone.style.top = '50vh';
                     logoClone.style.left = '50vw';
@@ -498,12 +554,10 @@
                     logoClone.style.transform = 'translate(-50%, -50%)';
                 }, 50);
 
-                // Début de la surcharge électrique 
                 setTimeout(() => {
                     logoClone.classList.add('charging');
                 }, 650);
 
-                // L'explosion
                 setTimeout(() => {
                     logoClone.classList.remove('charging');
                     logoClone.classList.add('explode');
@@ -518,13 +572,12 @@
                     createSparks();
                 }, 2200);
 
-                // Lancement du défilement fluide vers le bas
+                // Lancement du défilement fluide vers la nouvelle section pendant le vide
                 setTimeout(() => {
                     document.getElementById(targetId).scrollIntoView({ behavior: 'smooth' });
                     overlay.classList.remove('active');
                 }, 2600);
 
-                // Reset et réapparition douce du logo d'origine en haut
                 setTimeout(() => {
                     logoClone.style.display = 'none';
                     logoClone.classList.remove('explode');
