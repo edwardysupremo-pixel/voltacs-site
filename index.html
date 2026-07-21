@@ -3,69 +3,86 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Portfolio Électricité & Électronique</title>
-  
-  <!-- Lien vers le fichier CSS -->
+  <title>Mon Portfolio Électricité & Électronique</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-  <!-- EN-TÊTE -->
-  <header>
-    <h1>Mon Portfolio de Projets</h1>
-    <p>Électricité résidentielle, industrielle & Électronique</p>
+  <!-- BARRE DE NAVIGATION & LOGO -->
+  <header class="navbar">
+    <div class="logo-container">
+      <!-- Remplace logo.png par le nom exact de ton fichier logo -->
+      <img src="logo.png" alt="Logo" class="logo">
+    </div>
+    <nav>
+      <a href="#about">En savoir plus</a>
+      <a href="#categories-grid">Projets</a>
+      <a href="#contact" class="btn-rdv">Prendre RDV</a>
+    </nav>
   </header>
 
   <main>
-    <!-- PAGE D'ACCUEIL / SECTION PRINCIPALE -->
-    <section id="main-page">
-      
-      <!-- Carrousel Défilant Aléatoire -->
+    <!-- SECTION D'ACCUEIL AVEC CARROUSEL -->
+    <section id="hero">
+      <h1>Bienvenue sur mon Portfolio</h1>
+      <p>Découvrez mes réalisations en électricité et électronique</p>
+
       <div class="carousel-container">
-        <h2>Aperçu de mes réalisations</h2>
         <div class="carousel">
-          <img id="carousel-img" src="" alt="Défilé aléatoire de réalisation">
+          <img id="carousel-img" src="" alt="Aperçu des réalisations">
         </div>
       </div>
 
-      <!-- Bouton "Voir Plus" -->
       <div class="cta-container">
-        <button id="btn-voir-plus" class="btn">Voir plus / Choisir une catégorie</button>
-      </div>
-
-      <!-- Les 4 Catégories (Cachées au départ) -->
-      <div id="categories-grid" class="categories-grid hidden">
-        <div class="card" onclick="showGallery('residentiel')">
-          <h3>🏡 Résidentiel</h3>
-          <p>Chantiers, logettes, câblage & maisons</p>
-        </div>
-        <div class="card" onclick="showGallery('industriel')">
-          <h3>🏭 Industriel & Automates</h3>
-          <p>Grilles de préparation, variateurs & armoires</p>
-        </div>
-        <div class="card" onclick="showGallery('electronique')">
-          <h3>⚡ Électronique</h3>
-          <p>Cartes PCB & appareils de mesure</p>
-        </div>
-        <div class="card" onclick="showGallery('autres')">
-          <h3>🤖 Autres</h3>
-          <p>Projets 3D, prototypes & créations divers</p>
-        </div>
+        <button id="btn-voir-plus" class="btn">Voir plus / Mes catégories</button>
       </div>
     </section>
 
-    <!-- SECTION GALERIE FILTRÉE (Affichée au clic d'une catégorie) -->
-    <section id="gallery-page" class="hidden">
-      <button onclick="backToMain()" class="btn-back">← Retour aux catégories</button>
-      <h2 id="gallery-title"></h2>
-      
-      <div id="gallery-grid" class="gallery-grid">
-        <!-- Les photos/vidéos s'afficheront ici via le JS -->
+    <!-- SECTION DES 4 CATÉGORIES (Affiche après clic) -->
+    <section id="categories-grid" class="categories-grid hidden">
+      <div class="card" onclick="showGallery('residentiel')">
+        <h3>🏡 Résidentiel</h3>
+        <p>Chantiers, logettes, câblage & maisons</p>
       </div>
+      <div class="card" onclick="showGallery('industriel')">
+        <h3>🏭 Industriel & Automates</h3>
+        <p>Grilles de préparation, variateurs & armoires</p>
+      </div>
+      <div class="card" onclick="showGallery('electronique')">
+        <h3>⚡ Électronique</h3>
+        <p>Cartes PCB & appareils de mesure</p>
+      </div>
+      <div class="card" onclick="showGallery('autres')">
+        <h3>🤖 Autres</h3>
+        <p>Projets 3D, prototypes & créations divers</p>
+      </div>
+    </section>
+
+    <!-- PAGE GALERIE POUR UNE CATÉGORIE CHOISIE -->
+    <section id="gallery-page" class="hidden">
+      <button onclick="backToMain()" class="btn-back">← Retour</button>
+      <h2 id="gallery-title"></h2>
+      <div id="gallery-grid" class="gallery-grid"></div>
+    </section>
+
+    <!-- SECTION EN SAVOIR PLUS -->
+    <section id="about" class="about-section">
+      <h2>En savoir plus</h2>
+      <p>Spécialisé dans l'électricité résidentielle, industrielle et l'électronique, je réalise vos chantiers, installations d'automates, conceptions de PCB et bien plus encore avec précision et rigueur.</p>
+    </section>
+
+    <!-- SECTION PRANDRE RDV / CONTACT -->
+    <section id="contact" class="contact-section">
+      <h2>Besoin d'un devis ou d'un renseignement ?</h2>
+      <p>N'hésitez pas à me contacter pour discuter de votre projet.</p>
+      <a href="mailto:votre-email@example.com" class="btn btn-rdv-large">Prendre Rendez-vous</a>
     </section>
   </main>
 
-  <!-- Lien vers le fichier JavaScript -->
+  <footer>
+    <p>&copy; 2026 Tous droits réservés.</p>
+  </footer>
+
   <script src="script.js"></script>
 </body>
 </html>
