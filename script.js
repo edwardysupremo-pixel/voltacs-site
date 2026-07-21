@@ -1,25 +1,25 @@
-// Liste globale de tes photos et vidéo
+// Remplace ici avec les exacts noms de tes fichiers dans GitHub
 const mediaData = [
-  // 1. Résidentiel
-  { type: 'video', src: '20230222_155047.mp4', category: 'residentiel' }, // Chantier Ixelles
-  { type: 'image', src: '20240222_115602.jpg', category: 'residentiel' }, // Câblage réseau
-  { type: 'image', src: '20250218_111958.jpg', category: 'residentiel' }, // Logette
-  { type: 'image', src: '20240327_220913.jpg', category: 'residentiel' }, // Maison de nuit
+  // Résidentiel
+  { type: 'video', src: '20230222_155047.mp4', category: 'residentiel' },
+  { type: 'image', src: '20240222_115602.jpg', category: 'residentiel' },
+  { type: 'image', src: '20250218_111958.jpg', category: 'residentiel' },
+  { type: 'image', src: '20240327_220913.jpg', category: 'residentiel' },
 
-  // 2. Industriel & Automates
-  { type: 'image', src: '20221110_154748.jpg', category: 'industriel' },  // Grille complète
-  { type: 'image', src: '20250616_155505.jpg', category: 'industriel' },  // Grille câblage
+  // Industriel
+  { type: 'image', src: '20221110_154748.jpg', category: 'industriel' },
+  { type: 'image', src: '20250616_155505.jpg', category: 'industriel' },
 
-  // 3. Électronique
-  { type: 'image', src: '20260401_091328.jpg', category: 'electronique' }, // Carte HE EPHEC
-  { type: 'image', src: '20260519_113245.jpg', category: 'electronique' }, // PCB 7 segments
-  { type: 'image', src: '20260401_091330.jpg', category: 'electronique' }, // Labo mesure
+  // Électronique
+  { type: 'image', src: '20260401_091328.jpg', category: 'electronique' },
+  { type: 'image', src: '20260519_113245.jpg', category: 'electronique' },
+  { type: 'image', src: '20260401_091330.jpg', category: 'electronique' },
 
-  // 4. Autres
-  { type: 'image', src: '20260228_144850.jpg', category: 'autres' }       // Figurine 3D
+  // Autres
+  { type: 'image', src: '20260228_144850.jpg', category: 'autres' }
 ];
 
-// --- GESTION DU CARROUSEL ALEATOIRE ---
+// Defilement Aleatoire
 const carouselImg = document.getElementById('carousel-img');
 const imageOnlyList = mediaData.filter(m => m.type === 'image');
 
@@ -33,19 +33,19 @@ function changeCarouselImage() {
   }, 400);
 }
 
-// Lancer le défilé toutes les 3 secondes
 changeCarouselImage();
 setInterval(changeCarouselImage, 3000);
 
-// --- CABLE DU BOUTON "VOIR PLUS" ---
+// Bouton Voir Plus
 document.getElementById('btn-voir-plus').addEventListener('click', () => {
   document.getElementById('categories-grid').classList.remove('hidden');
   document.getElementById('btn-voir-plus').style.display = 'none';
 });
 
-// --- AFFICHER LA GALERIE FILTRÉE ---
+// Galerie Filtrée
 function showGallery(categoryKey) {
-  const mainPage = document.getElementById('main-page');
+  const mainHero = document.getElementById('hero');
+  const categoriesGrid = document.getElementById('categories-grid');
   const galleryPage = document.getElementById('gallery-page');
   const galleryGrid = document.getElementById('gallery-grid');
   const galleryTitle = document.getElementById('gallery-title');
@@ -58,12 +58,10 @@ function showGallery(categoryKey) {
   };
 
   galleryTitle.innerText = titles[categoryKey];
-  galleryGrid.innerHTML = ''; // Vide la galerie courante
+  galleryGrid.innerHTML = '';
 
-  // Récupérer les médias filtrés
   const filteredMedia = mediaData.filter(m => m.category === categoryKey);
 
-  // Générer les éléments dans la page
   filteredMedia.forEach(item => {
     if (item.type === 'image') {
       const img = document.createElement('img');
@@ -77,13 +75,14 @@ function showGallery(categoryKey) {
     }
   });
 
-  // Basculer la vue
-  mainPage.classList.add('hidden');
+  mainHero.classList.add('hidden');
+  categoriesGrid.classList.add('hidden');
   galleryPage.classList.remove('hidden');
 }
 
-// --- BOUTON RETOUR ---
+// Bouton Retour
 function backToMain() {
-  document.getElementById('main-page').classList.remove('hidden');
+  document.getElementById('hero').classList.remove('hidden');
+  document.getElementById('categories-grid').classList.remove('hidden');
   document.getElementById('gallery-page').classList.add('hidden');
 }
