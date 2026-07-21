@@ -516,6 +516,44 @@
             margin-bottom: 5px;
         }
 
+        /* --- SLIDER ALEATOIRE D'ACCUEIL --- */
+        .prouesses-slider-container {
+            max-width: 900px;
+            height: 480px;
+            margin: 40px auto 0 auto;
+            position: relative;
+            background-color: #000;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+        }
+
+        .random-slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            transition: opacity 1.2s ease-in-out;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .random-slide.active {
+            opacity: 1;
+        }
+
+        .random-slide img {
+            max-width: 100%;
+            max-height: 100%;
+            width: auto;
+            height: auto;
+            object-fit: contain;
+        }
+
         /* --- SERVICES SECTION --- */
         .services {
             padding: var(--section-padding);
@@ -633,6 +671,7 @@
             .hero-title-group h1 { font-size: 2.8rem; }
             .slide-img-container { height: 350px; }
             .slide-img, .slide-video { max-height: 350px; }
+            .prouesses-slider-container { height: 300px; }
         }
     </style>
 </head>
@@ -807,11 +846,11 @@
 
                 <div class="carousel-slide" data-category="industriel">
                     <div class="slide-img-container">
-                        <img src="photo chantier et projet/tets de moteur industrielle type MA3.jpg" alt="Test moteur industriel" class="slide-img">
+                        <img src="photo chantier et projet/tets de moteur industrielle type MAJ.jpg" alt="Test moteur industriel" class="slide-img">
                     </div>
                     <div class="slide-details">
                         <span class="slide-tag">Banc d'essai - Industriel</span>
-                        <h3>Test de Moteur Industriel Type MA3</h3>
+                        <h3>Test de Moteur Industriel Type MAJ</h3>
                         <p>Banc d'essai et contrôle de charge de moteurs industriels.</p>
                     </div>
                 </div>
@@ -931,6 +970,9 @@
                     Intégration d'éclairage LED architectural et de tableaux électriques modernes dans des structures anciennes.
                 </li>
             </ul>
+
+            <!-- SLIDER AUTOMATIQUE ET ALEATOIRE EXACTEMENT SOUS "EN SAVOIR PLUS" -->
+            <div class="prouesses-slider-container" id="randomSliderTrack"></div>
         </div>
     </section>
 
@@ -985,6 +1027,53 @@
 
     <!-- SCRIPTS : ANIMATIONS & LOGIQUE DU CARROUSEL -->
     <script>
+        // LOGIQUE DU SLIDER AUTOMATIQUE & ALEATOIRE SOUS LA RUBRIQUE
+        document.addEventListener('DOMContentLoaded', () => {
+            const myImages = [
+                "photo chantier et projet/chantier zotegem.jpg",
+                "photo chantier et projet/chantier zotegem 2.jpg",
+                "photo chantier et projet/chantier zotegem 3.jpg",
+                "photo chantier et projet/chantier zotegem 4.jpg",
+                "photo chantier et projet/zotegem 5.jpg",
+                "photo chantier et projet/eclairage exterieur dilbeek.jpg",
+                "photo chantier et projet/depannage domotique niko bus.jpg",
+                "photo chantier et projet/cablage de systeme industrielle.jpg",
+                "photo chantier et projet/grillage industrielle.jpg",
+                "photo chantier et projet/tets de moteur industrielle type MAJ.jpg",
+                "photo chantier et projet/creation de carte pcb.jpg",
+                "photo chantier et projet/poste de test de carte pcb.jpg",
+                "photo chantier et projet/mugen bot impression 3d.jpg"
+            ];
+
+            // Algorithme pour mélanger aléatoirement les images
+            const shuffled = [...myImages].sort(() => 0.5 - Math.random());
+            const randomTrack = document.getElementById('randomSliderTrack');
+
+            if (randomTrack) {
+                shuffled.forEach((src, index) => {
+                    const slide = document.createElement('div');
+                    slide.classList.add('random-slide');
+                    if (index === 0) slide.classList.add('active');
+
+                    const img = document.createElement('img');
+                    img.src = src;
+                    img.alt = "Réalisation VOLTACS";
+
+                    slide.appendChild(img);
+                    randomTrack.appendChild(slide);
+                });
+
+                const slides = randomTrack.querySelectorAll('.random-slide');
+                let rIndex = 0;
+
+                setInterval(() => {
+                    slides[rIndex].classList.remove('active');
+                    rIndex = (rIndex + 1) % slides.length;
+                    slides[rIndex].classList.add('active');
+                }, 3500); // Change toutes les 3.5 secondes
+            }
+        });
+
         // LOGIQUE DU CARROUSEL & CATÉGORIES
         let currentSlide = 0;
         const track = document.getElementById('carouselTrack');
