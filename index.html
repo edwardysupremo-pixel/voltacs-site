@@ -137,7 +137,7 @@
 
         .projects-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
             gap: 30px;
             margin-top: 50px;
         }
@@ -145,14 +145,57 @@
         .project-item {
             background-color: var(--bg-card);
             border: 1px solid var(--border-color);
-            padding: 30px;
-            border-radius: 4px;
-            position: relative;
+            border-radius: 6px;
             overflow: hidden;
+            position: relative;
+            transition: transform 0.3s ease, border-color 0.3s ease;
         }
 
-        .project-item::before {
-            content: ''; position: absolute; top:0; left:0; width: 4px; height: 100%; background: var(--electric-blue);
+        .project-item:hover {
+            border-color: var(--electric-blue);
+            transform: translateY(-5px);
+        }
+
+        .project-img-container {
+            position: relative;
+            width: 100%;
+            height: 250px;
+            overflow: hidden;
+            background-color: #000;
+        }
+
+        .project-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.4s ease;
+        }
+
+        .project-item:hover .project-img {
+            transform: scale(1.05);
+        }
+
+        .status-tag {
+            position: absolute;
+            top: 12px; right: 12px;
+            padding: 6px 14px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border-radius: 20px;
+            backdrop-filter: blur(8px);
+        }
+
+        .status-ongoing {
+            background: rgba(255, 170, 0, 0.25);
+            color: #ffaa00;
+            border: 1px solid #ffaa00;
+            box-shadow: 0 0 10px rgba(255, 170, 0, 0.3);
+        }
+
+        .project-details {
+            padding: 25px;
         }
 
         .project-tag {
@@ -160,19 +203,19 @@
             text-transform: uppercase;
             letter-spacing: 1px;
             color: var(--electric-cyan);
-            margin-bottom: 10px;
+            margin-bottom: 8px;
             display: inline-block;
         }
 
-        .project-item h3 {
-            font-size: 1.3rem;
-            margin-bottom: 15px;
+        .project-details h3 {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
             text-transform: uppercase;
         }
 
-        .project-item p {
+        .project-details p {
             color: var(--text-muted);
-            font-size: 0.95rem;
+            font-size: 0.9rem;
         }
 
         /* --- HEADER & NAVIGATION --- */
@@ -336,7 +379,7 @@
             margin: 18px auto 0 auto;
         }
 
-        /* --- PROUESSES (QUI SOMMES NOUS - PRÉSERVÉ) --- */
+        /* --- PROUESSES (SECTION TEXTUELLE PRESERVEE) --- */
         .prouesses {
             padding: var(--section-padding);
             background-color: var(--bg-card);
@@ -509,31 +552,104 @@
     <div id="flash-screen"></div>
     <img src="logo.voltacs-removebg-preview.png" alt="" id="logo-clone" class="electric-clone">
 
-    <!-- PAGE / POPUP DES CHANTIERS REALISÉS -->
+    <!-- FENÊTRE DÉDIÉE : CHANTIERS & PROJETS RÉALISÉS -->
     <div id="projects-page">
-        <button class="close-projects" onclick="closeProjectsPage()">Retour au site</button>
-        <h2 class="section-title" style="margin-top: 40px;">Projets & Chantiers Réalisés</h2>
+        <button class="close-projects" onclick="closeProjectsPage()">Fermer / Retour</button>
+        <h2 class="section-title" style="margin-top: 40px;">Projets & Chantiers</h2>
+        
         <div class="projects-grid">
+            
+            <!-- PHOTO 1 -->
             <div class="project-item">
-                <span class="project-tag">Domotique KNX</span>
-                <h3>Villa Connectée Intellectuelle</h3>
-                <p>Intégration complète d'un système domotique haut de gamme pour la gestion de l'éclairage architectural DALI, des ouvrants et de la régulation thermique par zone.</p>
+                <div class="project-img-container">
+                    <img src="photo chantier et projet/20260720_134210.jpg" alt="Chantier Voltacs" class="project-img">
+                    <span class="status-tag status-ongoing">⚡ Chantier en cours d'installation</span>
+                </div>
+                <div class="project-details">
+                    <span class="project-tag">Rénovation Lourde</span>
+                    <h3>Saignées & Intégration Châssis</h3>
+                    <p>Traçage technique et saignées pour encastrement des alimentations d'ouvrants et prises.</p>
+                </div>
             </div>
+
+            <!-- PHOTO 2 -->
             <div class="project-item">
-                <span class="project-tag">Rénovation de Puissance</span>
-                <h3>Mise en conformité Résidentielle</h3>
-                <p>Remise à neuf totale d'une ancienne bâtisse avec changement de tableau électrique, division de puissance et obtention de la certification de conformité RGIE.</p>
+                <div class="project-img-container">
+                    <img src="photo chantier et projet/20260720_134223.jpg" alt="Chantier Voltacs" class="project-img">
+                    <span class="status-tag status-ongoing">⚡ Chantier en cours d'installation</span>
+                </div>
+                <div class="project-details">
+                    <span class="project-tag">Rainurage Vertical</span>
+                    <h3>Saignée principale & Boîtiers</h3>
+                    <p>Découpe verticale nette dans la structure pour passage des gaines d'interrupteurs.</p>
+                </div>
             </div>
+
+            <!-- PHOTO 3 -->
             <div class="project-item">
-                <span class="project-tag">Dépannage d'Urgence</span>
-                <h3>Résolution de Panne & Court-Circuit</h3>
-                <p>Intervention rapide suite à une saturation de réseau. Diagnostic de précision et sécurisation immédiate des circuits défectueux.</p>
+                <div class="project-img-container">
+                    <img src="photo chantier et projet/20260720_134228.jpg" alt="Chantier Voltacs" class="project-img">
+                    <span class="status-tag status-ongoing">⚡ Chantier en cours d'installation</span>
+                </div>
+                <div class="project-details">
+                    <span class="project-tag">Passage Réseau</span>
+                    <h3>Saignée Continue & Boîtier Encastré</h3>
+                    <p>Préparation des saignées au perforateur de précision pour descente de câblage.</p>
+                </div>
             </div>
+
+            <!-- PHOTO 4 -->
             <div class="project-item">
-                <span class="project-tag">Éclairage Architectural</span>
-                <h3>Création Lumineuse LED</h3>
-                <p>Intégration invisible de bandeaux LED haute intensité et gestion de scénarios d'ambiance connectés pour des pièces de réception modernes.</p>
+                <div class="project-img-container">
+                    <img src="photo chantier et projet/20260720_120808.jpg" alt="Chantier Voltacs" class="project-img">
+                    <span class="status-tag status-ongoing">⚡ Chantier en cours d'installation</span>
+                </div>
+                <div class="project-details">
+                    <span class="project-tag">Traçage de Précision</span>
+                    <h3>Calibrage Laser & Boîtier</h3>
+                    <p>Traçage d'implantation d'appareillage au niveau laser Hilti avant découpe.</p>
+                </div>
             </div>
+
+            <!-- PHOTO 5 -->
+            <div class="project-item">
+                <div class="project-img-container">
+                    <img src="photo chantier et projet/20260720_120820.jpg" alt="Chantier Voltacs" class="project-img">
+                    <span class="status-tag status-ongoing">⚡ Chantier en cours d'installation</span>
+                </div>
+                <div class="project-details">
+                    <span class="project-tag">Implantation Technique</span>
+                    <h3>Saignée double & Matériel</h3>
+                    <p>Mise en place des lignes de rainurage au niveau laser dans la zone de vie.</p>
+                </div>
+            </div>
+
+            <!-- PHOTO 6 -->
+            <div class="project-item">
+                <div class="project-img-container">
+                    <img src="photo chantier et projet/20260720_134123.jpg" alt="Chantier Voltacs" class="project-img">
+                    <span class="status-tag status-ongoing">⚡ Chantier en cours d'installation</span>
+                </div>
+                <div class="project-details">
+                    <span class="project-tag">Câblage Structuré</span>
+                    <h3>Saignée Plafond-Sol</h3>
+                    <p>Saignée verticale traversante pour liaison boîtier-tableau électrique.</p>
+                </div>
+            </div>
+
+            <!-- PHOTO 7 -->
+            <div class="project-item">
+                <div class="project-img-container">
+                    <img src="photo chantier et projet/20260720_134130.jpg" alt="Chantier Voltacs" class="project-img">
+                    <span class="status-tag status-ongoing">⚡ Chantier en cours d'installation</span>
+                </div>
+                <div class="project-details">
+                    <span class="project-tag">Gros Œuvre Technique</span>
+                    <h3>Encastrement Boîtier de Commande</h3>
+                    <p>Évidement dans la maçonnerie pour boîtier d'encastrement multiposte.</p>
+                </div>
+            </div>
+
         </div>
     </div>
 
@@ -545,13 +661,11 @@
         <nav>
             <ul>
                 <li><a class="action-btn" data-target="accueil">Accueil</a></li>
-                <!-- Modifié ici : Déclenche l'ouverture de la page de chantiers -->
                 <li><a class="action-btn" data-action="open-projects">Chantiers Réalisés</a></li>
                 <li><a class="action-btn" data-target="services">Expertises</a></li>
                 <li><a class="action-btn" data-target="contact">Devenir Client</a></li>
             </ul>
         </nav>
-        <!-- Reste relié à la section informative textuelle en dessous -->
         <button class="btn-contact action-btn" data-target="prouesses">En savoir plus</button>
     </header>
 
@@ -564,7 +678,7 @@
         <button class="hero-cta action-btn" data-target="contact">Votre Devis en 48h</button>
     </section>
 
-    <!-- PROUESSES SECTION (TEXTE PRÉSERVÉ SANS CHANGEMENT) -->
+    <!-- PROUESSES SECTION (TEXTE INTACT) -->
     <section class="prouesses" id="prouesses">
         <h2 class="section-title">VOLTACS : L'Expert derrière le Courant</h2>
         <div class="prouesses-content">
@@ -694,12 +808,10 @@
                 originalLogo.style.opacity = '0';
                 overlay.classList.add('active');
                 
-                // Si c'est un bouton de scroll vers une section standard
                 if (targetId) {
                     document.getElementById(targetId).scrollIntoView({ behavior: 'smooth' });
                 }
 
-                // Centrage rapide du logo
                 setTimeout(() => {
                     logoClone.style.transition = 'all 0.3s cubic-bezier(0.25, 1, 0.5, 1)';
                     logoClone.style.top = '50vh';
@@ -709,12 +821,10 @@
                     logoClone.style.transform = 'translate(-50%, -50%)';
                 }, 30);
 
-                // Charge électrique
                 setTimeout(() => {
                     logoClone.classList.add('charging');
                 }, 350);
 
-                // EXPLOSION (1.1s)
                 setTimeout(() => {
                     logoClone.classList.remove('charging');
                     logoClone.classList.add('explode');
@@ -729,15 +839,13 @@
                     createSparks();
                     overlay.classList.remove('active');
 
-                    // Action Spécifique : Si c'est pour ouvrir l'interface des chantiers
                     if (action === 'open-projects') {
                         projectsPage.classList.add('active');
-                        document.body.style.overflow = 'hidden'; // Empêche de scroller le fond
+                        document.body.style.overflow = 'hidden';
                         projectsPage.scrollTop = 0;
                     }
                 }, 1100);
 
-                // Nettoyage
                 setTimeout(() => {
                     logoClone.style.display = 'none';
                     logoClone.classList.remove('explode');
