@@ -621,7 +621,7 @@
             color: var(--text-muted);
         }
 
-        .form-group input, .form-group textarea {
+        .form-group input, .form-group textarea, .form-group select {
             width: 100%;
             background-color: var(--bg-dark);
             border: 1px solid var(--border-color);
@@ -631,7 +631,7 @@
             transition: border-color 0.3s;
         }
 
-        .form-group input:focus, .form-group textarea:focus {
+        .form-group input:focus, .form-group textarea:focus, .form-group select:focus {
             outline: none;
             border-color: var(--electric-blue);
         }
@@ -661,33 +661,201 @@
             letter-spacing: 1px;
         }
 
-        /* RESPONSIVE */
+        /* RESPONSIVE & ADAPTATION MOBILE ENRICHIE */
         @media (max-width: 768px) {
-            header { height: auto; padding: 20px; }
-            .logo-img { position: static; transform: none; width: 250px; height: 90px; margin: 0 auto 15px auto; }
-            .logo-img.scrolled { position: static; transform: none; width: 140px; height: 50px; }
-            nav ul { gap: 15px; justify-content: center; margin: 0; padding-bottom: 10px; }
-            .hero-title-group { margin-top: 50px; }
-            .hero-title-group h1 { font-size: 2.8rem; }
-            .slide-img-container { height: 350px; }
-            .slide-img, .slide-video { max-height: 350px; }
-            .prouesses-slider-container { height: 300px; }
+            :root {
+                --section-padding: 50px 5%;
+            }
+
+            header { 
+                height: auto; 
+                padding: 15px 5%; 
+                flex-direction: column;
+                justify-content: center;
+            }
+
+            .logo-placeholder {
+                width: 100%;
+                height: 70px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+
+            .logo-img { 
+                position: static; 
+                transform: none; 
+                max-width: 90vw;
+                width: 250px; 
+                height: auto; 
+                margin: 0 auto; 
+            }
+
+            .logo-img.scrolled { 
+                position: static; 
+                transform: none; 
+                width: 140px; 
+                height: auto; 
+            }
+
+            nav ul { 
+                gap: 12px; 
+                justify-content: center; 
+                flex-wrap: wrap;
+                margin: 10px 0; 
+                padding: 0; 
+            }
+
+            nav a {
+                font-size: 0.8rem;
+            }
+
+            .btn-contact {
+                margin-top: 5px;
+                padding: 6px 15px;
+                font-size: 0.75rem;
+            }
+
+            .hero {
+                min-height: calc(100vh - 120px);
+                padding: 40px 15px 40px 15px;
+                justify-content: center;
+            }
+
+            .hero-title-group { 
+                margin-top: 0; 
+            }
+
+            .hero-title-group h1 { 
+                font-size: 2.2rem; 
+                letter-spacing: 4px;
+                margin-bottom: 15px;
+            }
+
+            .hero p {
+                font-size: 0.95rem;
+                letter-spacing: 2px;
+                margin-bottom: 30px;
+            }
+
+            .hero-cta {
+                padding: 14px 28px;
+                font-size: 0.85rem;
+                width: 100%;
+                max-width: 300px;
+            }
+
+            .section-title {
+                font-size: 1.5rem;
+                letter-spacing: 2px;
+            }
+
+            .prouesses-content {
+                font-size: 0.95rem;
+            }
+
+            .prouesses-list {
+                grid-template-columns: 1fr;
+                gap: 15px;
+                margin-top: 25px;
+            }
+
+            .prouesses-slider-container { 
+                height: 250px; 
+                margin-top: 25px;
+            }
+
+            .services-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .service-card {
+                padding: 25px 20px;
+            }
+
+            #projects-page {
+                padding: 60px 3% 30px 3%;
+            }
+
+            .close-projects {
+                top: 15px;
+                right: 3%;
+                padding: 8px 12px;
+                font-size: 0.75rem;
+            }
+
+            .category-filters {
+                gap: 8px;
+                margin: 15px 0;
+            }
+
+            .filter-btn {
+                padding: 8px 12px;
+                font-size: 0.7rem;
+                flex: 1 1 calc(50% - 10px);
+                text-align: center;
+            }
+
+            .carousel-container {
+                margin-top: 10px;
+            }
+
+            .slide-img-container { 
+                height: 280px; 
+            }
+
+            .slide-img, .slide-video { 
+                max-height: 280px; 
+            }
+
+            .slide-details {
+                padding: 15px 18px;
+            }
+
+            .slide-details h3 {
+                font-size: 1.05rem;
+            }
+
+            .slide-details p {
+                font-size: 0.85rem;
+            }
+
+            .carousel-btn {
+                width: 38px;
+                height: 38px;
+                font-size: 0.9rem;
+            }
+
+            .carousel-btn.prev { left: 8px; }
+            .carousel-btn.next { right: 8px; }
+
+            .contact-container {
+                width: 100%;
+            }
+
+            .form-group input, .form-group textarea, .form-group select {
+                padding: 12px;
+                font-size: 0.9rem;
+            }
+
+            .btn-submit {
+                padding: 15px;
+                font-size: 0.9rem;
+            }
         }
     </style>
 </head>
 <body>
 
-    <!-- SYSTEMES D'ANIMATIONS -->
     <div id="electricity-overlay"></div>
     <div id="flash-screen"></div>
     <img src="logo.voltacs-removebg-preview.png" alt="" id="logo-clone" class="electric-clone">
 
-    <!-- FENÊTRE DÉDIÉE : CARROUSEL DÉFILANT DES CHANTIERS & CATÉGORIES -->
     <div id="projects-page">
         <button class="close-projects" onclick="closeProjectsPage()">Fermer / Retour</button>
         <h2 class="section-title" style="margin-top: 20px;">Projets & Chantiers Réalisés</h2>
         
-        <!-- BARRE DE FILTRES DES CATÉGORIES -->
         <div class="category-filters">
             <button class="filter-btn active" onclick="filterCategory('all')">Tous les projets</button>
             <button class="filter-btn" onclick="filterCategory('residentiel')">🏡 Résidentiel</button>
@@ -697,13 +865,11 @@
         </div>
 
         <div class="carousel-container">
-            <!-- Boutons de navigation -->
             <button class="carousel-btn prev" onclick="moveSlide(-1)">◀</button>
             <button class="carousel-btn next" onclick="moveSlide(1)">▶</button>
 
             <div class="carousel-track" id="carouselTrack">
                 
-                <!-- === RÉSIDENTIEL === -->
                 <div class="carousel-slide" data-category="residentiel">
                     <div class="slide-img-container">
                         <video src="photo chantier et projet/chantier cablage ixelle.mp4" autoplay muted loop playsinline class="slide-video"></video>
@@ -715,7 +881,6 @@
                     </div>
                 </div>
 
-                <!-- SÉRIE ZOTTEGEM 8 (1 À 10) -->
                 <div class="carousel-slide" data-category="residentiel">
                     <div class="slide-img-container">
                         <img src="photo chantier et projet/zottegem 8 (1).jpg" alt="Chantier Zottegem 8 - Photo 1" class="slide-img">
@@ -836,7 +1001,6 @@
                     </div>
                 </div>
 
-                <!-- CHANTIERS HISTORIQUES RÉSIDENTIELS -->
                 <div class="carousel-slide" data-category="residentiel">
                     <div class="slide-img-container">
                         <img src="photo chantier et projet/chantier zotegem.jpg" alt="Chantier Zotegem 1" class="slide-img">
@@ -943,7 +1107,6 @@
                     </div>
                 </div>
 
-                <!-- === INDUSTRIEL & AUTOMATES === -->
                 <div class="carousel-slide" data-category="industriel">
                     <div class="slide-img-container">
                         <img src="photo chantier et projet/cablage de systeme industrielle.jpg" alt="Câblage Système Industriel" class="slide-img">
@@ -977,7 +1140,6 @@
                     </div>
                 </div>
 
-                <!-- === ÉLECTRONIQUE === -->
                 <div class="carousel-slide" data-category="electronique">
                     <div class="slide-img-container">
                         <img src="photo chantier et projet/creation de carte pcb.jpg" alt="Création PCB" class="slide-img">
@@ -1022,7 +1184,6 @@
                     </div>
                 </div>
 
-                <!-- === AUTRES & PROTOTYPES === -->
                 <div class="carousel-slide" data-category="autres">
                     <div class="slide-img-container">
                         <img src="photo chantier et projet/mugen bot impression 3d.jpg" alt="Mugen Bot 3D" class="slide-img">
@@ -1037,11 +1198,9 @@
             </div>
         </div>
 
-        <!-- Puces de navigation -->
         <div class="carousel-dots" id="carouselDots"></div>
     </div>
 
-    <!-- NAV BAR -->
     <header>
         <div class="logo-placeholder">
             <img src="logo.voltacs-removebg-preview.png" alt="VOLTACS Logo" class="logo-img" id="original-logo">
@@ -1057,7 +1216,6 @@
         <button class="btn-contact action-btn" data-target="prouesses">En savoir plus</button>
     </header>
 
-    <!-- HERO SECTION -->
     <section class="hero" id="accueil">
         <div class="hero-title-group">
             <h1>VOLTACS</h1>
@@ -1066,7 +1224,6 @@
         <button class="hero-cta action-btn" data-target="contact">Votre Devis en 48h</button>
     </section>
 
-    <!-- PROUESSES SECTION -->
     <section class="prouesses" id="prouesses">
         <h2 class="section-title">VOLTACS : L'Expert derrière le Courant</h2>
         <div class="prouesses-content">
@@ -1093,12 +1250,10 @@
                 </li>
             </ul>
 
-            <!-- SLIDER AUTOMATIQUE ET ALEATOIRE EXACTEMENT SOUS "EN SAVOIR PLUS" -->
             <div class="prouesses-slider-container" id="randomSliderTrack"></div>
         </div>
     </section>
 
-    <!-- SERVICES SECTION -->
     <section class="services" id="services">
         <h2 class="section-title">Nos Domaines d'Expertise</h2>
         <div class="services-grid">
@@ -1120,16 +1275,13 @@
         </div>
     </section>
 
-    <!-- CONTACT SECTION -->
     <section class="contact" id="contact">
         <h2 class="section-title">Planifions votre projet</h2>
         <div class="contact-container">
            <form action="https://api.web3forms.com/submit" method="POST" class="contact-form">
 
-    <!-- Clé d'accès Web3Forms VOLTACS -->
     <input type="hidden" name="access_key" value="789e1c90-6403-40bf-ade0-164f767cdda7">
 
-    <!-- Empêche le spam (Honeypot) -->
     <input type="checkbox" name="botcheck" class="hidden" style="display: none;">
 
     <div class="form-group">
@@ -1168,12 +1320,10 @@
         </div>
     </section>
 
-    <!-- FOOTER -->
     <footer>
         <p>&copy; 2026 VOLTACS. Ingénierie Électrique & Domotique. Tous droits réservés.</p>
     </footer>
 
-    <!-- SCRIPTS : ANIMATIONS & LOGIQUE DU CARROUSEL -->
     <script>
         // LOGIQUE DU SLIDER AUTOMATIQUE & ALEATOIRE SOUS LA RUBRIQUE
         document.addEventListener('DOMContentLoaded', () => {
@@ -1302,142 +1452,3 @@
                     } else {
                         slide.style.display = 'none';
                     }
-                });
-            }
-
-            currentSlide = 0;
-            generateDots();
-            updateCarousel();
-        }
-
-        generateDots();
-
-        // LOGIQUE DES ANIMATIONS VOLTACS ET SCROLL
-        const originalLogo = document.getElementById('original-logo');
-        const logoClone = document.getElementById('logo-clone');
-        const overlay = document.getElementById('electricity-overlay');
-        const flashScreen = document.getElementById('flash-screen');
-        const buttons = document.querySelectorAll('.action-btn');
-        const projectsPage = document.getElementById('projects-page');
-
-        function handleScroll() {
-            if (window.innerWidth <= 768) return;
-            if (window.scrollY > 60) {
-                originalLogo.classList.add('scrolled'); 
-            } else {
-                originalLogo.classList.remove('scrolled'); 
-            }
-        }
-
-        window.addEventListener('scroll', handleScroll);
-        window.addEventListener('resize', handleScroll);
-        handleScroll();
-
-        function closeProjectsPage() {
-            projectsPage.classList.remove('active');
-            document.body.style.overflow = 'auto';
-        }
-
-        buttons.forEach(button => {
-            button.addEventListener('click', (e) => {
-                e.preventDefault();
-                const targetId = button.getAttribute('data-target');
-                const action = button.getAttribute('data-action');
-                
-                const origRect = originalLogo.getBoundingClientRect();
-                
-                logoClone.style.transition = 'none';
-                logoClone.style.top = origRect.top + 'px';
-                logoClone.style.left = origRect.left + 'px';
-                logoClone.style.width = origRect.width + 'px';
-                logoClone.style.height = origRect.height + 'px';
-                
-                if(originalLogo.classList.contains('scrolled')) {
-                    logoClone.style.transform = 'translate(0, -50%)';
-                } else {
-                    logoClone.style.transform = 'translate(-50%, -50%)';
-                }
-                logoClone.style.display = 'block';
-                logoClone.style.opacity = '1';
-
-                originalLogo.style.opacity = '0';
-                overlay.classList.add('active');
-                
-                if (targetId) {
-                    document.getElementById(targetId).scrollIntoView({ behavior: 'smooth' });
-                }
-
-                setTimeout(() => {
-                    logoClone.style.transition = 'all 0.3s cubic-bezier(0.25, 1, 0.5, 1)';
-                    logoClone.style.top = '50vh';
-                    logoClone.style.left = '50vw';
-                    logoClone.style.width = '1050px';   
-                    logoClone.style.height = '378px';  
-                    logoClone.style.transform = 'translate(-50%, -50%)';
-                }, 30);
-
-                setTimeout(() => {
-                    logoClone.classList.add('charging');
-                }, 350);
-
-                setTimeout(() => {
-                    logoClone.classList.remove('charging');
-                    logoClone.classList.add('explode');
-                    
-                    flashScreen.style.transition = "none";
-                    flashScreen.style.opacity = "1";
-                    setTimeout(() => {
-                        flashScreen.style.transition = "opacity 0.3s ease";
-                        flashScreen.style.opacity = "0";
-                    }, 30);
-
-                    createSparks();
-                    overlay.classList.remove('active');
-
-                    if (action === 'open-projects') {
-                        projectsPage.classList.add('active');
-                        document.body.style.overflow = 'hidden';
-                        projectsPage.scrollTop = 0;
-                    }
-                }, 1100);
-
-                setTimeout(() => {
-                    logoClone.style.display = 'none';
-                    logoClone.classList.remove('explode');
-                    
-                    originalLogo.style.transition = 'opacity 0.4s ease';
-                    originalLogo.style.opacity = '1';
-                }, 1450);
-            });
-        });
-
-        function createSparks() {
-            for (let i = 0; i < 55; i++) {
-                const spark = document.createElement('div');
-                spark.classList.add('spark');
-                overlay.appendChild(spark);
-
-                const angle = Math.random() * Math.PI * 2;
-                const distance = 150 + Math.random() * 320;
-                const destX = Math.cos(angle) * distance;
-                const destY = Math.sin(angle) * distance;
-
-                spark.style.left = '50vw';
-                spark.style.top = '50vh';
-                spark.style.transform = `translate(-50%, -50%) rotate(${angle + Math.PI/2}deg)`;
-                
-                spark.animate([
-                    { opacity: 1, height: '38px', transform: `translate(-50%, -50%) rotate(${angle + Math.PI/2}deg) translateY(0px)` },
-                    { opacity: 0, height: '5px', transform: `translate(-50%, -50%) rotate(${angle + Math.PI/2}deg) translateY(${-destY}px) translateX(${destX}px)` }
-                ], {
-                    duration: 200 + Math.random() * 250,
-                    easing: 'cubic-bezier(0.1, 0.8, 0.3, 1)',
-                    fill: 'forwards'
-                });
-
-                setTimeout(() => spark.remove(), 600);
-            }
-        }
-    </script>
-</body>
-</html>
