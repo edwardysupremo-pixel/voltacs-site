@@ -4,6 +4,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>VOLTACS | Électricité Résidentielle & Domotique</title>
+
+    <!-- [OPTIMISATION] Référencement Google & partage réseaux sociaux -->
+    <meta name="description" content="VOLTACS, électricien et domoticien en Belgique : installation électrique, mise en conformité RGIE, domotique, éclairage LED et sécurité. Votre devis en 48h.">
+    <meta name="theme-color" content="#07090e">
+    <link rel="canonical" href="https://voltacs.be/">
+    <link rel="icon" type="image/png" href="logo.voltacs-removebg-preview.png">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://voltacs.be/">
+    <meta property="og:title" content="VOLTACS | Électricité Résidentielle & Domotique">
+    <meta property="og:description" content="Installation électrique, mise en conformité RGIE, domotique et sécurité. Votre devis en 48h.">
+    <meta property="og:image" content="https://voltacs.be/logo.voltacs-removebg-preview.png">
+
     <style>
         /* --- RESET & VARIABLES --- */
         * {
@@ -21,7 +33,13 @@
             --border-color: #1e2633;
             --electric-blue: #00d2ff;
             --electric-cyan: #00f6ff;
+            --success: #2ee59d;
+            --error: #ff5c5c;
             --section-padding: 100px 8%;
+        }
+
+        html {
+            scroll-behavior: smooth;
         }
 
         body {
@@ -30,6 +48,15 @@
             line-height: 1.6;
             overflow-x: hidden;
         }
+
+        /* [OPTIMISATION] Contour visible au clavier (accessibilité) */
+        a:focus-visible, button:focus-visible, .service-card:focus-visible {
+            outline: 2px solid var(--electric-cyan);
+            outline-offset: 3px;
+        }
+
+        /* Les sections ne passent plus sous l'en-tête quand on clique dans le menu */
+        section { scroll-margin-top: 90px; }
 
         /* --- SYSTEME D'ANIMATION ÉLECTRIQUE DU LOGO --- */
         #electricity-overlay {
@@ -105,6 +132,7 @@
         #projects-page {
             position: fixed;
             top: 0; left: 0; width: 100vw; height: 100vh;
+            height: 100dvh;
             background-color: var(--bg-dark);
             z-index: 5000;
             display: none;
@@ -288,6 +316,7 @@
         .carousel-dots {
             display: flex;
             justify-content: center;
+            flex-wrap: wrap;
             gap: 10px;
             margin: 20px 0;
         }
@@ -334,8 +363,9 @@
             z-index: 1001;
             top: 32vh; 
             left: 50vw;
-            width: 1000px; 
-            height: 360px; 
+            /* [OPTIMISATION] Le logo ne dépasse plus de l'écran sur les écrans moyens */
+            width: min(1000px, 90vw); 
+            height: min(360px, 32.4vw); 
             transform: translate(-50%, -50%);
             transition: top 0.5s ease-in-out, 
                         left 0.5s ease-in-out, 
@@ -374,6 +404,32 @@
         nav a:hover {
             color: var(--text-light);
         }
+
+        /* BOUTON MENU MOBILE (☰) — caché sur ordinateur */
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            gap: 6px;
+            width: 44px;
+            height: 44px;
+            padding: 10px;
+            background: transparent;
+            border: 1px solid var(--border-color);
+            cursor: pointer;
+        }
+
+        .menu-toggle span {
+            display: block;
+            height: 2px;
+            width: 100%;
+            background: var(--text-light);
+            transition: transform 0.3s ease, opacity 0.3s ease;
+        }
+
+        .menu-toggle.open span:nth-child(1) { transform: translateY(8px) rotate(45deg); }
+        .menu-toggle.open span:nth-child(2) { opacity: 0; }
+        .menu-toggle.open span:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
 
         .btn-contact {
             background: transparent;
@@ -418,6 +474,7 @@
             text-transform: uppercase;
             background: linear-gradient(180deg, #ffffff 0%, #a4b3c6 100%);
             -webkit-background-clip: text;
+            background-clip: text;
             -webkit-text-fill-color: transparent;
             margin-bottom: 25px;
         }
@@ -468,6 +525,13 @@
             margin: 18px auto 0 auto;
         }
 
+        .section-subtitle {
+            text-align: center;
+            color: var(--text-muted);
+            max-width: 560px;
+            margin: 0 auto 45px auto;
+        }
+
         /* --- PROUESSES SECTION --- */
         .prouesses {
             padding: var(--section-padding);
@@ -496,7 +560,7 @@
         .prouesses-list {
             list-style: none;
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(min(280px, 100%), 1fr));
             gap: 25px;
             margin-top: 40px;
         }
@@ -561,7 +625,7 @@
 
         .services-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(min(320px, 100%), 1fr));
             gap: 40px;
         }
 
@@ -601,11 +665,23 @@
             padding: var(--section-padding);
             background-color: var(--bg-card);
             border-top: 1px solid var(--border-color);
+            background-image: radial-gradient(circle at 50% 0%, rgba(0, 210, 255, 0.06) 0%, transparent 60%);
         }
 
         .contact-container {
-            max-width: 650px;
+            max-width: 680px;
             margin: 0 auto;
+            background-color: rgba(7, 9, 14, 0.6);
+            border: 1px solid var(--border-color);
+            border-top: 2px solid var(--electric-blue);
+            padding: 45px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
         }
 
         .form-group {
@@ -616,24 +692,79 @@
             display: block;
             text-transform: uppercase;
             letter-spacing: 1px;
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             margin-bottom: 8px;
             color: var(--text-muted);
         }
 
-        .form-group input, .form-group textarea {
+        .form-group label .req {
+            color: var(--electric-cyan);
+            margin-left: 3px;
+        }
+
+        .form-group label .optional {
+            text-transform: none;
+            letter-spacing: 0;
+            opacity: 0.6;
+            margin-left: 4px;
+        }
+
+        /* [CORRECTION] Le menu déroulant n'avait aucun style : il est maintenant identique aux autres champs */
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
             width: 100%;
             background-color: var(--bg-dark);
             border: 1px solid var(--border-color);
+            border-radius: 0;
             padding: 15px;
             color: var(--text-light);
             font-size: 1rem;
-            transition: border-color 0.3s;
+            font-family: inherit;
+            transition: border-color 0.3s, box-shadow 0.3s;
         }
 
-        .form-group input:focus, .form-group textarea:focus {
+        .form-group select {
+            appearance: none;
+            -webkit-appearance: none;
+            cursor: pointer;
+            padding-right: 45px;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='9' viewBox='0 0 14 9'%3E%3Cpath d='M1 1l6 6 6-6' fill='none' stroke='%2300f6ff' stroke-width='2'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 18px center;
+        }
+
+        .form-group select:invalid {
+            color: #5b6576;
+        }
+
+        .form-group select option {
+            background-color: var(--bg-dark);
+            color: var(--text-light);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 140px;
+        }
+
+        .form-group input::placeholder,
+        .form-group textarea::placeholder {
+            color: #5b6576;
+        }
+
+        .form-group input:hover,
+        .form-group textarea:hover,
+        .form-group select:hover {
+            border-color: #2d3a4d;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
             outline: none;
             border-color: var(--electric-blue);
+            box-shadow: 0 0 0 3px rgba(0, 210, 255, 0.12), 0 0 18px rgba(0, 210, 255, 0.12);
         }
 
         .btn-submit {
@@ -648,6 +779,48 @@
             letter-spacing: 2px;
             cursor: pointer;
             clip-path: polygon(15px 0%, 100% 0%, calc(100% - 15px) 100%, 0% 100%);
+            transition: background-color 0.3s, box-shadow 0.3s, transform 0.2s;
+        }
+
+        .btn-submit:hover {
+            background-color: var(--electric-cyan);
+            box-shadow: 0 0 30px rgba(0, 246, 255, 0.35);
+            transform: translateY(-2px);
+        }
+
+        .btn-submit:disabled {
+            opacity: 0.6;
+            cursor: wait;
+            transform: none;
+        }
+
+        .form-status {
+            display: none;
+            margin-top: 20px;
+            padding: 16px 18px;
+            border-left: 3px solid;
+            font-size: 0.95rem;
+        }
+
+        .form-status.success {
+            display: block;
+            border-color: var(--success);
+            background: rgba(46, 229, 157, 0.08);
+            color: var(--success);
+        }
+
+        .form-status.error {
+            display: block;
+            border-color: var(--error);
+            background: rgba(255, 92, 92, 0.08);
+            color: var(--error);
+        }
+
+        .form-note {
+            margin-top: 18px;
+            font-size: 0.8rem;
+            color: #5b6576;
+            text-align: center;
         }
 
         /* --- FOOTER --- */
@@ -661,17 +834,94 @@
             letter-spacing: 1px;
         }
 
-        /* RESPONSIVE */
+        /* RESPONSIVE MOBILE */
         @media (max-width: 768px) {
-            header { height: auto; padding: 20px; }
-            .logo-img { position: static; transform: none; width: 250px; height: 90px; margin: 0 auto 15px auto; }
-            .logo-img.scrolled { position: static; transform: none; width: 140px; height: 50px; }
-            nav ul { gap: 15px; justify-content: center; margin: 0; padding-bottom: 10px; }
-            .hero-title-group { margin-top: 50px; }
-            .hero-title-group h1 { font-size: 2.8rem; }
-            .slide-img-container { height: 350px; }
-            .slide-img, .slide-video { max-height: 350px; }
-            .prouesses-slider-container { height: 300px; }
+            :root { --section-padding: 70px 20px; }
+            section { scroll-margin-top: 75px; }
+
+            /* En-tête compact : logo à gauche, menu ☰ à droite */
+            header { height: 72px; padding: 0 20px; }
+            .logo-placeholder { width: auto; height: auto; }
+            .logo-img, .logo-img.scrolled {
+                position: static;
+                transform: none;
+                width: 150px;
+                height: 54px;
+                margin: 0;
+                transition: opacity 0.3s ease;
+            }
+            .menu-toggle { display: flex; }
+            .btn-contact { display: none; }
+
+            /* Menu déroulant */
+            nav {
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background-color: rgba(7, 9, 14, 0.98);
+                border-bottom: 1px solid var(--border-color);
+                max-height: 0;
+                overflow: hidden;
+                transition: max-height 0.35s ease;
+            }
+            nav.open { max-height: 400px; }
+            nav ul { flex-direction: column; gap: 0; margin: 0; padding: 10px 20px 20px; }
+            nav li { border-bottom: 1px solid var(--border-color); }
+            nav li:last-child { border-bottom: none; }
+            nav a { display: block; padding: 16px 4px; font-size: 1rem; color: var(--text-light); }
+
+            /* Accueil */
+            .hero { min-height: calc(100svh - 72px); justify-content: center; padding: 40px 20px; }
+            .hero-title-group { margin-top: 0; }
+            .hero-title-group h1 { font-size: 2.4rem; letter-spacing: 6px; margin-bottom: 15px; }
+            .hero p { font-size: 0.95rem; letter-spacing: 3px; margin-bottom: 35px; }
+            .hero-cta { padding: 16px 32px; font-size: 0.9rem; }
+
+            /* Sections */
+            .section-title { font-size: 1.6rem; letter-spacing: 2px; }
+            .prouesses-content { font-size: 1rem; }
+            .prouesses-slider-container { height: 260px; }
+            .services-grid { gap: 20px; }
+            .service-card { padding: 30px 24px; }
+            .service-card h3 { font-size: 1.25rem; }
+
+            /* Galerie des chantiers */
+            #projects-page { padding: 16px 16px 30px; }
+            .close-projects {
+                position: sticky;
+                top: 0;
+                display: block;
+                margin: 0 0 10px auto;
+                background-color: var(--bg-dark);
+            }
+            .category-filters { gap: 8px; }
+            .filter-btn { padding: 8px 12px; font-size: 0.7rem; }
+            .slide-img-container { height: 300px; }
+            .slide-img, .slide-video { max-height: 300px; }
+            .slide-details { padding: 18px 20px; }
+            .slide-details h3 { font-size: 1.1rem; }
+            .carousel-btn { width: 40px; height: 40px; top: 150px; }
+            .status-tag { top: 10px; right: 10px; padding: 6px 12px; font-size: 0.7rem; }
+
+            /* Formulaire */
+            .contact-container { padding: 28px 20px; }
+            .form-row { grid-template-columns: 1fr; gap: 0; }
+        }
+
+        /* Écrans tactiles : pas d'effet de survol qui reste "bloqué" après un toucher */
+        @media (hover: none) {
+            .service-card:hover { transform: none; }
+            .btn-submit:hover, .hero-cta:hover { transform: none; }
+        }
+
+        /* [OPTIMISATION] Respecte les visiteurs qui désactivent les animations */
+        @media (prefers-reduced-motion: reduce) {
+            html { scroll-behavior: auto; }
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                transition-duration: 0.01ms !important;
+            }
         }
     </style>
 </head>
@@ -683,7 +933,7 @@
     <img src="logo.voltacs-removebg-preview.png" alt="" id="logo-clone" class="electric-clone">
 
     <!-- FENÊTRE DÉDIÉE : CARROUSEL DÉFILANT DES CHANTIERS & CATÉGORIES -->
-    <div id="projects-page">
+    <div id="projects-page" role="dialog" aria-label="Projets et chantiers réalisés">
         <button class="close-projects" onclick="closeProjectsPage()">Fermer / Retour</button>
         <h2 class="section-title" style="margin-top: 20px;">Projets & Chantiers Réalisés</h2>
         
@@ -698,15 +948,17 @@
 
         <div class="carousel-container">
             <!-- Boutons de navigation -->
-            <button class="carousel-btn prev" onclick="moveSlide(-1)">◀</button>
-            <button class="carousel-btn next" onclick="moveSlide(1)">▶</button>
+            <button class="carousel-btn prev" onclick="moveSlide(-1)" aria-label="Projet précédent">◀</button>
+            <button class="carousel-btn next" onclick="moveSlide(1)" aria-label="Projet suivant">▶</button>
 
+            <!-- [OPTIMISATION] loading="lazy" : les photos ne se chargent que quand on les regarde -->
             <div class="carousel-track" id="carouselTrack">
                 
                 <!-- === RÉSIDENTIEL === -->
                 <div class="carousel-slide" data-category="residentiel">
                     <div class="slide-img-container">
-                        <video src="photo chantier et projet/chantier cablage ixelle.mp4" autoplay muted loop playsinline class="slide-video"></video>
+                        <!-- [OPTIMISATION] La vidéo ne se télécharge plus au chargement du site, seulement à l'ouverture des chantiers -->
+                        <video id="projectsVideo" src="photo chantier et projet/chantier cablage ixelle.mp4" muted loop playsinline preload="none" class="slide-video"></video>
                     </div>
                     <div class="slide-details">
                         <span class="slide-tag">Vidéo Démonstration - Résidentiel</span>
@@ -718,7 +970,7 @@
                 <!-- SÉRIE ZOTTEGEM 8 (1 À 10) -->
                 <div class="carousel-slide" data-category="residentiel">
                     <div class="slide-img-container">
-                        <img src="photo chantier et projet/zottegem 8 (1).jpg" alt="Chantier Zottegem 8 - Photo 1" class="slide-img">
+                        <img src="photo chantier et projet/zottegem 8 (1).jpg" alt="Chantier à Zottegem : pose de gaines et boîtiers" class="slide-img" loading="lazy" decoding="async">
                         <span class="status-tag status-ongoing">⚡ Chantier en cours</span>
                     </div>
                     <div class="slide-details">
@@ -730,7 +982,7 @@
 
                 <div class="carousel-slide" data-category="residentiel">
                     <div class="slide-img-container">
-                        <img src="photo chantier et projet/zottegem 8 (2).jpg" alt="Chantier Zottegem 8 - Photo 2" class="slide-img">
+                        <img src="photo chantier et projet/zottegem 8 (2).jpg" alt="Chantier à Zottegem : distribution des lignes sous mansarde" class="slide-img" loading="lazy" decoding="async">
                         <span class="status-tag status-ongoing">⚡ Chantier en cours</span>
                     </div>
                     <div class="slide-details">
@@ -742,7 +994,7 @@
 
                 <div class="carousel-slide" data-category="residentiel">
                     <div class="slide-img-container">
-                        <img src="photo chantier et projet/zottegem 8 (3).jpg" alt="Chantier Zottegem 8 - Photo 3" class="slide-img">
+                        <img src="photo chantier et projet/zottegem 8 (3).jpg" alt="Chantier à Zottegem : boîtiers d'encastrement sur cloisons" class="slide-img" loading="lazy" decoding="async">
                         <span class="status-tag status-ongoing">⚡ Chantier en cours</span>
                     </div>
                     <div class="slide-details">
@@ -754,7 +1006,7 @@
 
                 <div class="carousel-slide" data-category="residentiel">
                     <div class="slide-img-container">
-                        <img src="photo chantier et projet/zottegem 8 (4).jpg" alt="Chantier Zottegem 8 - Photo 4" class="slide-img">
+                        <img src="photo chantier et projet/zottegem 8 (4).jpg" alt="Chantier à Zottegem : câblage au sol vers le coffret" class="slide-img" loading="lazy" decoding="async">
                         <span class="status-tag status-ongoing">⚡ Chantier en cours</span>
                     </div>
                     <div class="slide-details">
@@ -766,7 +1018,7 @@
 
                 <div class="carousel-slide" data-category="residentiel">
                     <div class="slide-img-container">
-                        <img src="photo chantier et projet/zottegem 8 (5).jpg" alt="Chantier Zottegem 8 - Photo 5" class="slide-img">
+                        <img src="photo chantier et projet/zottegem 8 (5).jpg" alt="Chantier à Zottegem : faisceaux de câbles au sol" class="slide-img" loading="lazy" decoding="async">
                         <span class="status-tag status-ongoing">⚡ Chantier en cours</span>
                     </div>
                     <div class="slide-details">
@@ -778,7 +1030,7 @@
 
                 <div class="carousel-slide" data-category="residentiel">
                     <div class="slide-img-container">
-                        <img src="photo chantier et projet/zottegem 8 (6).jpg" alt="Chantier Zottegem 8 - Photo 6" class="slide-img">
+                        <img src="photo chantier et projet/zottegem 8 (6).jpg" alt="Chantier à Zottegem : passage de câbles sous toiture" class="slide-img" loading="lazy" decoding="async">
                         <span class="status-tag status-ongoing">⚡ Chantier en cours</span>
                     </div>
                     <div class="slide-details">
@@ -790,7 +1042,7 @@
 
                 <div class="carousel-slide" data-category="residentiel">
                     <div class="slide-img-container">
-                        <img src="photo chantier et projet/zottegem 8 (7).jpg" alt="Chantier Zottegem 8 - Photo 7" class="slide-img">
+                        <img src="photo chantier et projet/zottegem 8 (7).jpg" alt="Chantier à Zottegem : préparation des circuits d'éclairage" class="slide-img" loading="lazy" decoding="async">
                         <span class="status-tag status-ongoing">⚡ Chantier en cours</span>
                     </div>
                     <div class="slide-details">
@@ -802,7 +1054,7 @@
 
                 <div class="carousel-slide" data-category="residentiel">
                     <div class="slide-img-container">
-                        <img src="photo chantier et projet/zottegem 8 (8).jpg" alt="Chantier Zottegem 8 - Photo 8" class="slide-img">
+                        <img src="photo chantier et projet/zottegem 8 (8).jpg" alt="Chantier à Zottegem : saignée verticale dans la maçonnerie" class="slide-img" loading="lazy" decoding="async">
                         <span class="status-tag status-ongoing">⚡ Chantier en cours</span>
                     </div>
                     <div class="slide-details">
@@ -814,7 +1066,7 @@
 
                 <div class="carousel-slide" data-category="residentiel">
                     <div class="slide-img-container">
-                        <img src="photo chantier et projet/zottegem 8 (9).jpg" alt="Chantier Zottegem 8 - Photo 9" class="slide-img">
+                        <img src="photo chantier et projet/zottegem 8 (9).jpg" alt="Chantier à Zottegem : colonnes montantes et circuits" class="slide-img" loading="lazy" decoding="async">
                         <span class="status-tag status-ongoing">⚡ Chantier en cours</span>
                     </div>
                     <div class="slide-details">
@@ -826,7 +1078,7 @@
 
                 <div class="carousel-slide" data-category="residentiel">
                     <div class="slide-img-container">
-                        <img src="photo chantier et projet/zottegem 8 (10).jpg" alt="Chantier Zottegem 8 - Photo 10" class="slide-img">
+                        <img src="photo chantier et projet/zottegem 8 (10).jpg" alt="Chantier à Zottegem : contrôle des gaines avant fermeture" class="slide-img" loading="lazy" decoding="async">
                         <span class="status-tag status-ongoing">⚡ Chantier en cours</span>
                     </div>
                     <div class="slide-details">
@@ -839,7 +1091,7 @@
                 <!-- CHANTIERS HISTORIQUES RÉSIDENTIELS -->
                 <div class="carousel-slide" data-category="residentiel">
                     <div class="slide-img-container">
-                        <img src="photo chantier et projet/chantier zotegem.jpg" alt="Chantier Zotegem 1" class="slide-img">
+                        <img src="photo chantier et projet/chantier zotegem.jpg" alt="Chantier à Zottegem : câblage et raccordements" class="slide-img" loading="lazy" decoding="async">
                         <span class="status-tag status-ongoing">⚡ Chantier en cours</span>
                     </div>
                     <div class="slide-details">
@@ -851,7 +1103,7 @@
 
                 <div class="carousel-slide" data-category="residentiel">
                     <div class="slide-img-container">
-                        <img src="photo chantier et projet/chantier zotegem 2.jpg" alt="Chantier Zotegem 2" class="slide-img">
+                        <img src="photo chantier et projet/chantier zotegem 2.jpg" alt="Chantier à Zottegem : préparation des gaines et coffrets" class="slide-img" loading="lazy" decoding="async">
                         <span class="status-tag status-ongoing">⚡ Chantier en cours</span>
                     </div>
                     <div class="slide-details">
@@ -863,7 +1115,7 @@
 
                 <div class="carousel-slide" data-category="residentiel">
                     <div class="slide-img-container">
-                        <img src="photo chantier et projet/chantier zotegem 3.jpg" alt="Chantier Zotegem 3" class="slide-img">
+                        <img src="photo chantier et projet/chantier zotegem 3.jpg" alt="Chantier à Zottegem : incrustation de boîtiers" class="slide-img" loading="lazy" decoding="async">
                         <span class="status-tag status-ongoing">⚡ Chantier en cours</span>
                     </div>
                     <div class="slide-details">
@@ -875,7 +1127,7 @@
 
                 <div class="carousel-slide" data-category="residentiel">
                     <div class="slide-img-container">
-                        <img src="photo chantier et projet/chantier zotegem 4.jpg" alt="Chantier Zotegem 4" class="slide-img">
+                        <img src="photo chantier et projet/chantier zotegem 4.jpg" alt="Chantier à Zottegem : saignées pour encastrement" class="slide-img" loading="lazy" decoding="async">
                         <span class="status-tag status-ongoing">⚡ Chantier en cours</span>
                     </div>
                     <div class="slide-details">
@@ -887,7 +1139,7 @@
 
                 <div class="carousel-slide" data-category="residentiel">
                     <div class="slide-img-container">
-                        <img src="photo chantier et projet/zotegem 5.jpg" alt="Zotegem 5" class="slide-img">
+                        <img src="photo chantier et projet/zotegem 5.jpg" alt="Chantier à Zottegem : saignée verticale principale" class="slide-img" loading="lazy" decoding="async">
                         <span class="status-tag status-ongoing">⚡ Chantier en cours</span>
                     </div>
                     <div class="slide-details">
@@ -899,7 +1151,7 @@
 
                 <div class="carousel-slide" data-category="residentiel">
                     <div class="slide-img-container">
-                        <img src="photo chantier et projet/zotegem 6.jpg" alt="Zotegem 6" class="slide-img">
+                        <img src="photo chantier et projet/zotegem 6.jpg" alt="Chantier à Zottegem : saignée continue pour descente de câblage" class="slide-img" loading="lazy" decoding="async">
                         <span class="status-tag status-ongoing">⚡ Chantier en cours</span>
                     </div>
                     <div class="slide-details">
@@ -911,7 +1163,7 @@
 
                 <div class="carousel-slide" data-category="residentiel">
                     <div class="slide-img-container">
-                        <img src="photo chantier et projet/zotegem 7.jpg" alt="Zotegem 7" class="slide-img">
+                        <img src="photo chantier et projet/zotegem 7.jpg" alt="Chantier à Zottegem : traçage laser avant découpe" class="slide-img" loading="lazy" decoding="async">
                         <span class="status-tag status-ongoing">⚡ Chantier en cours</span>
                     </div>
                     <div class="slide-details">
@@ -923,7 +1175,7 @@
 
                 <div class="carousel-slide" data-category="residentiel">
                     <div class="slide-img-container">
-                        <img src="photo chantier et projet/eclairage exterieur dilbeek.jpg" alt="Éclairage dilbeek" class="slide-img">
+                        <img src="photo chantier et projet/eclairage exterieur dilbeek.jpg" alt="Éclairage extérieur LED d'une maison à Dilbeek" class="slide-img" loading="lazy" decoding="async">
                     </div>
                     <div class="slide-details">
                         <span class="slide-tag">Éclairage Extérieur</span>
@@ -934,7 +1186,7 @@
 
                 <div class="carousel-slide" data-category="residentiel">
                     <div class="slide-img-container">
-                        <img src="photo chantier et projet/depannage domotique niko bus.jpg" alt="Dépannage Niko Bus" class="slide-img">
+                        <img src="photo chantier et projet/depannage domotique niko bus.jpg" alt="Dépannage d'une installation domotique Niko Bus" class="slide-img" loading="lazy" decoding="async">
                     </div>
                     <div class="slide-details">
                         <span class="slide-tag">Domotique Niko Bus</span>
@@ -946,7 +1198,7 @@
                 <!-- === INDUSTRIEL & AUTOMATES === -->
                 <div class="carousel-slide" data-category="industriel">
                     <div class="slide-img-container">
-                        <img src="photo chantier et projet/cablage de systeme industrielle.jpg" alt="Câblage Système Industriel" class="slide-img">
+                        <img src="photo chantier et projet/cablage de systeme industrielle.jpg" alt="Câblage d'automates et relais dans un coffret industriel" class="slide-img" loading="lazy" decoding="async">
                     </div>
                     <div class="slide-details">
                         <span class="slide-tag">Armoires & Automates - Industriel</span>
@@ -957,7 +1209,7 @@
 
                 <div class="carousel-slide" data-category="industriel">
                     <div class="slide-img-container">
-                        <img src="photo chantier et projet/grillage industrielle.jpg" alt="Grillage Industrielle" class="slide-img">
+                        <img src="photo chantier et projet/grillage industrielle.jpg" alt="Variateurs de vitesse et grille de commande industrielle" class="slide-img" loading="lazy" decoding="async">
                     </div>
                     <div class="slide-details">
                         <span class="slide-tag">Contrôle de Moteur - Industriel</span>
@@ -968,7 +1220,7 @@
 
                 <div class="carousel-slide" data-category="industriel">
                     <div class="slide-img-container">
-                        <img src="photo chantier et projet/tets de moteur industrielle type MA3.jpg" alt="Test moteur industriel" class="slide-img">
+                        <img src="photo chantier et projet/tets de moteur industrielle type MA3.jpg" alt="Banc d'essai d'un moteur industriel type MA3" class="slide-img" loading="lazy" decoding="async">
                     </div>
                     <div class="slide-details">
                         <span class="slide-tag">Banc d'essai - Industriel</span>
@@ -980,7 +1232,7 @@
                 <!-- === ÉLECTRONIQUE === -->
                 <div class="carousel-slide" data-category="electronique">
                     <div class="slide-img-container">
-                        <img src="photo chantier et projet/creation de carte pcb.jpg" alt="Création PCB" class="slide-img">
+                        <img src="photo chantier et projet/creation de carte pcb.jpg" alt="Conception et soudure d'une carte électronique PCB" class="slide-img" loading="lazy" decoding="async">
                     </div>
                     <div class="slide-details">
                         <span class="slide-tag">Mesure & PCB - Électronique</span>
@@ -991,7 +1243,7 @@
 
                 <div class="carousel-slide" data-category="electronique">
                     <div class="slide-img-container">
-                        <img src="photo chantier et projet/poste de test de carte pcb.jpg" alt="Poste de Test PCB" class="slide-img">
+                        <img src="photo chantier et projet/poste de test de carte pcb.jpg" alt="Poste de test de cartes PCB avec oscilloscope" class="slide-img" loading="lazy" decoding="async">
                     </div>
                     <div class="slide-details">
                         <span class="slide-tag">Prototypes Électroniques</span>
@@ -1002,7 +1254,7 @@
 
                 <div class="carousel-slide" data-category="electronique">
                     <div class="slide-img-container">
-                        <img src="photo chantier et projet/test de carte pcb.jpg" alt="Test de carte PCB" class="slide-img">
+                        <img src="photo chantier et projet/test de carte pcb.jpg" alt="Test et calibration de modules électroniques" class="slide-img" loading="lazy" decoding="async">
                     </div>
                     <div class="slide-details">
                         <span class="slide-tag">Microsoudures</span>
@@ -1013,7 +1265,7 @@
 
                 <div class="carousel-slide" data-category="electronique">
                     <div class="slide-img-container">
-                        <img src="photo chantier et projet/test dans logette.jpg" alt="Test dans logette" class="slide-img">
+                        <img src="photo chantier et projet/test dans logette.jpg" alt="Test de connexion réseau en logette technique" class="slide-img" loading="lazy" decoding="async">
                     </div>
                     <div class="slide-details">
                         <span class="slide-tag">Contrôle Réseau</span>
@@ -1025,7 +1277,7 @@
                 <!-- === AUTRES & PROTOTYPES === -->
                 <div class="carousel-slide" data-category="autres">
                     <div class="slide-img-container">
-                        <img src="photo chantier et projet/mugen bot impression 3d.jpg" alt="Mugen Bot 3D" class="slide-img">
+                        <img src="photo chantier et projet/mugen bot impression 3d.jpg" alt="Robot Mugen Bot réalisé en impression 3D" class="slide-img" loading="lazy" decoding="async">
                     </div>
                     <div class="slide-details">
                         <span class="slide-tag">Projets Spécialisés - Prototypes</span>
@@ -1044,19 +1296,25 @@
     <!-- NAV BAR -->
     <header>
         <div class="logo-placeholder">
-            <img src="logo.voltacs-removebg-preview.png" alt="VOLTACS Logo" class="logo-img" id="original-logo">
+            <img src="logo.voltacs-removebg-preview.png" alt="VOLTACS Logo" class="logo-img" id="original-logo" fetchpriority="high">
         </div>
-        <nav>
+        <nav id="mainNav">
+            <!-- [OPTIMISATION] Les liens ont maintenant une adresse (href) : accessibles au clavier et lisibles par Google -->
             <ul>
-                <li><a class="action-btn" data-target="accueil">Accueil</a></li>
-                <li><a class="action-btn" data-action="open-projects">Chantiers Réalisés</a></li>
-                <li><a class="action-btn" data-target="services">Expertises</a></li>
-                <li><a class="action-btn" data-target="contact">Devenir Client</a></li>
+                <li><a href="#accueil" class="action-btn" data-target="accueil">Accueil</a></li>
+                <li><a href="#chantiers" class="action-btn" data-action="open-projects">Chantiers Réalisés</a></li>
+                <li><a href="#services" class="action-btn" data-target="services">Expertises</a></li>
+                <li><a href="#contact" class="action-btn" data-target="contact">Devenir Client</a></li>
             </ul>
         </nav>
         <button class="btn-contact action-btn" data-target="prouesses">En savoir plus</button>
+        <!-- Bouton menu ☰ (visible uniquement sur mobile) -->
+        <button class="menu-toggle" id="menuToggle" aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="mainNav">
+            <span></span><span></span><span></span>
+        </button>
     </header>
 
+    <main>
     <!-- HERO SECTION -->
     <section class="hero" id="accueil">
         <div class="hero-title-group">
@@ -1102,17 +1360,17 @@
     <section class="services" id="services">
         <h2 class="section-title">Nos Domaines d'Expertise</h2>
         <div class="services-grid">
-            <div class="service-card action-btn" data-target="contact">
+            <div class="service-card action-btn" data-target="contact" role="button" tabindex="0">
                 <div class="service-icon">⚡</div>
                 <h3>Réseaux Résidentiels</h3>
                 <p>Installation complète, mise en conformité RGIE, tableaux divisionnaires de puissance et rénovation pour une sécurité absolue de vos biens et personnes.</p>
             </div>
-            <div class="service-card action-btn" data-target="contact">
+            <div class="service-card action-btn" data-target="contact" role="button" tabindex="0">
                 <div class="service-icon">🤖</div>
                 <h3>Domotique Intégrée</h3>
                 <p>Automatisation intelligente (éclairage, chauffage, ouvrants, audio) et conception de scénarios personnalisés pour un habitat autonome et connecté.</p>
             </div>
-            <div class="service-card action-btn" data-target="contact">
+            <div class="service-card action-btn" data-target="contact" role="button" tabindex="0">
                 <div class="service-icon">🛡️</div>
                 <h3>Sécurité & IP</h3>
                 <p>Contrôle d'accès, vidéophonie IP connectée, caméras de surveillance et réseaux VDI pour une maison entièrement sécurisée et interconnectée.</p>
@@ -1123,50 +1381,60 @@
     <!-- CONTACT SECTION -->
     <section class="contact" id="contact">
         <h2 class="section-title">Planifions votre projet</h2>
+        <p class="section-subtitle">Décrivez votre besoin, je vous réponds rapidement avec un devis ou une proposition de rendez-vous.</p>
         <div class="contact-container">
-           <form action="https://api.web3forms.com/submit" method="POST" class="contact-form">
+            <!-- Formulaire Web3Forms : l'adresse "action", la clé et les "name" des champs sont inchangés -->
+            <form action="https://api.web3forms.com/submit" method="POST" class="contact-form" id="contactForm">
 
-    <!-- Clé d'accès Web3Forms VOLTACS -->
-    <input type="hidden" name="access_key" value="789e1c90-6403-40bf-ade0-164f767cdda7">
+                <!-- Clé d'accès Web3Forms VOLTACS -->
+                <input type="hidden" name="access_key" value="789e1c90-6403-40bf-ade0-164f767cdda7">
+                <!-- Nom d'expéditeur affiché dans votre boîte mail -->
+                <input type="hidden" name="from_name" value="Site VOLTACS">
 
-    <!-- Empêche le spam (Honeypot) -->
-    <input type="checkbox" name="botcheck" class="hidden" style="display: none;">
+                <!-- Empêche le spam (Honeypot) -->
+                <input type="checkbox" name="botcheck" class="hidden" style="display: none;" tabindex="-1" autocomplete="off">
 
-    <div class="form-group">
-        <label for="name">Nom et Prénom</label>
-        <input type="text" id="name" name="name" placeholder="Ex: Jean Dupont" required>
-    </div>
+                <div class="form-group">
+                    <label for="name">Nom et Prénom<span class="req">*</span></label>
+                    <input type="text" id="name" name="name" placeholder="Ex: Jean Dupont" autocomplete="name" required>
+                </div>
 
-    <div class="form-group">
-        <label for="email">Adresse E-mail</label>
-        <input type="email" id="email" name="email" placeholder="Ex: jean.dupont@email.com" required>
-    </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="email">Adresse E-mail<span class="req">*</span></label>
+                        <input type="email" id="email" name="email" placeholder="jean.dupont@email.com" autocomplete="email" required>
+                    </div>
 
-    <div class="form-group">
-        <label for="phone">Numéro de téléphone</label>
-        <input type="tel" id="phone" name="phone" placeholder="Ex: 04XX XX XX XX">
-    </div>
+                    <div class="form-group">
+                        <label for="phone">Téléphone<span class="optional">(facultatif)</span></label>
+                        <input type="tel" id="phone" name="phone" placeholder="04XX XX XX XX" autocomplete="tel">
+                    </div>
+                </div>
 
-    <div class="form-group">
-        <label for="subject">Objet de la demande</label>
-        <select id="subject" name="subject" required>
-            <option value="" disabled selected>Choisissez une option...</option>
-            <option value="Demande de devis">Demande de devis</option>
-            <option value="Prise de rendez-vous">Prise de rendez-vous</option>
-            <option value="Renseignement / Autre">Renseignement / Autre</option>
-        </select>
-    </div>
+                <div class="form-group">
+                    <label for="subject">Objet de la demande<span class="req">*</span></label>
+                    <select id="subject" name="subject" required>
+                        <option value="" disabled selected>Choisissez une option...</option>
+                        <option value="Demande de devis">Demande de devis</option>
+                        <option value="Prise de rendez-vous">Prise de rendez-vous</option>
+                        <option value="Renseignement / Autre">Renseignement / Autre</option>
+                    </select>
+                </div>
 
-    <div class="form-group">
-        <label for="message">Votre message</label>
-        <textarea id="message" name="message" rows="5" placeholder="Détaillez votre demande ou vos disponibilités pour un RDV..." required></textarea>
-    </div>
+                <div class="form-group">
+                    <label for="message">Votre message<span class="req">*</span></label>
+                    <textarea id="message" name="message" rows="5" placeholder="Détaillez votre demande ou vos disponibilités pour un RDV..." required></textarea>
+                </div>
 
-    <button type="submit" class="btn-submit">Envoyer la demande</button>
+                <button type="submit" class="btn-submit" id="submitBtn">Envoyer la demande</button>
 
-</form>
+                <div class="form-status" id="formStatus" role="status" aria-live="polite"></div>
+
+                <p class="form-note">Vos données servent uniquement à répondre à votre demande. Elles ne sont ni revendues ni utilisées à d'autres fins.</p>
+            </form>
         </div>
     </section>
+    </main>
 
     <!-- FOOTER -->
     <footer>
@@ -1175,6 +1443,8 @@
 
     <!-- SCRIPTS : ANIMATIONS & LOGIQUE DU CARROUSEL -->
     <script>
+        const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
         // LOGIQUE DU SLIDER AUTOMATIQUE & ALEATOIRE SOUS LA RUBRIQUE
         document.addEventListener('DOMContentLoaded', () => {
             const myImages = [
@@ -1207,32 +1477,70 @@
                 "photo chantier et projet/mugen bot impression 3d.jpg"
             ];
 
-            // Algorithme pour mélanger aléatoirement les images
-            const shuffled = [...myImages].sort(() => 0.5 - Math.random());
+            // Mélange aléatoire équitable (Fisher-Yates)
+            const shuffled = [...myImages];
+            for (let i = shuffled.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+            }
+
             const randomTrack = document.getElementById('randomSliderTrack');
 
             if (randomTrack) {
+                // [OPTIMISATION] Avant : les 27 photos étaient téléchargées d'un coup au chargement.
+                // Maintenant : seules les photos affichées (et la suivante) sont chargées, au fur et à mesure.
+                const imgs = [];
                 shuffled.forEach((src, index) => {
                     const slide = document.createElement('div');
                     slide.classList.add('random-slide');
                     if (index === 0) slide.classList.add('active');
 
                     const img = document.createElement('img');
-                    img.src = src;
+                    img.dataset.src = src;
                     img.alt = "Réalisation VOLTACS";
+                    img.decoding = "async";
 
                     slide.appendChild(img);
                     randomTrack.appendChild(slide);
+                    imgs.push(img);
                 });
+
+                const loadImg = (i) => {
+                    const img = imgs[i];
+                    if (img && !img.src) img.src = img.dataset.src;
+                };
 
                 const slides = randomTrack.querySelectorAll('.random-slide');
                 let rIndex = 0;
+                let started = false;
 
-                setInterval(() => {
-                    slides[rIndex].classList.remove('active');
-                    rIndex = (rIndex + 1) % slides.length;
-                    slides[rIndex].classList.add('active');
-                }, 3500); // Change toutes les 3.5 secondes
+                const startSlider = () => {
+                    if (started) return;
+                    started = true;
+                    loadImg(0);
+                    loadImg(1);
+                    setInterval(() => {
+                        if (document.hidden) return; // pause si l'onglet n'est pas visible
+                        slides[rIndex].classList.remove('active');
+                        rIndex = (rIndex + 1) % slides.length;
+                        loadImg(rIndex);
+                        loadImg((rIndex + 1) % slides.length); // pré-charge la suivante
+                        slides[rIndex].classList.add('active');
+                    }, 3500); // Change toutes les 3.5 secondes
+                };
+
+                // Le slider démarre seulement quand le visiteur approche de cette section
+                if ('IntersectionObserver' in window) {
+                    const observer = new IntersectionObserver((entries) => {
+                        if (entries.some(e => e.isIntersecting)) {
+                            startSlider();
+                            observer.disconnect();
+                        }
+                    }, { rootMargin: '400px' });
+                    observer.observe(randomTrack);
+                } else {
+                    startSlider();
+                }
             }
         });
 
@@ -1240,6 +1548,7 @@
         let currentSlide = 0;
         const track = document.getElementById('carouselTrack');
         const dotsContainer = document.getElementById('carouselDots');
+        const projectsVideo = document.getElementById('projectsVideo');
         let visibleSlides = Array.from(document.querySelectorAll('.carousel-slide'));
 
         function generateDots() {
@@ -1250,6 +1559,15 @@
                 if (idx === currentSlide) dot.classList.add('active');
                 dot.onclick = () => goToSlide(idx);
                 dotsContainer.appendChild(dot);
+            });
+        }
+
+        // Pré-charge la photo actuelle et la suivante pour un défilement fluide
+        function preloadAround() {
+            [currentSlide, currentSlide + 1].forEach(i => {
+                const slide = visibleSlides[i % visibleSlides.length];
+                const img = slide && slide.querySelector('img.slide-img');
+                if (img) img.loading = 'eager';
             });
         }
 
@@ -1264,6 +1582,7 @@
                     dot.classList.remove('active');
                 }
             });
+            preloadAround();
         }
 
         function moveSlide(direction) {
@@ -1312,6 +1631,14 @@
 
         generateDots();
 
+        // Navigation au clavier dans la galerie (flèches + Échap)
+        document.addEventListener('keydown', (e) => {
+            if (!projectsPage.classList.contains('active')) return;
+            if (e.key === 'ArrowLeft') moveSlide(-1);
+            if (e.key === 'ArrowRight') moveSlide(1);
+            if (e.key === 'Escape') closeProjectsPage();
+        });
+
         // LOGIQUE DES ANIMATIONS VOLTACS ET SCROLL
         const originalLogo = document.getElementById('original-logo');
         const logoClone = document.getElementById('logo-clone');
@@ -1329,20 +1656,47 @@
             }
         }
 
-        window.addEventListener('scroll', handleScroll);
+        window.addEventListener('scroll', handleScroll, { passive: true });
         window.addEventListener('resize', handleScroll);
         handleScroll();
+
+        function openProjectsPage() {
+            projectsPage.classList.add('active');
+            document.body.style.overflow = 'hidden';
+            projectsPage.scrollTop = 0;
+            preloadAround();
+            // La vidéo ne démarre qu'à l'ouverture de la galerie
+            if (projectsVideo) projectsVideo.play().catch(() => {});
+        }
 
         function closeProjectsPage() {
             projectsPage.classList.remove('active');
             document.body.style.overflow = 'auto';
+            if (projectsVideo) projectsVideo.pause();
         }
 
         buttons.forEach(button => {
+            // Les cartes "services" réagissent aussi à la touche Entrée
+            if (button.classList.contains('service-card')) {
+                button.addEventListener('keydown', (e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        button.click();
+                    }
+                });
+            }
+
             button.addEventListener('click', (e) => {
                 e.preventDefault();
                 const targetId = button.getAttribute('data-target');
                 const action = button.getAttribute('data-action');
+
+                // Visiteurs ayant désactivé les animations : action directe, sans effet électrique
+                if (reduceMotion) {
+                    if (targetId) document.getElementById(targetId).scrollIntoView();
+                    if (action === 'open-projects') openProjectsPage();
+                    return;
+                }
                 
                 const origRect = originalLogo.getBoundingClientRect();
                 
@@ -1371,8 +1725,8 @@
                     logoClone.style.transition = 'all 0.3s cubic-bezier(0.25, 1, 0.5, 1)';
                     logoClone.style.top = '50vh';
                     logoClone.style.left = '50vw';
-                    logoClone.style.width = '1050px';   
-                    logoClone.style.height = '378px';  
+                    logoClone.style.width = 'min(1050px, 92vw)';   
+                    logoClone.style.height = 'min(378px, 33vw)';  
                     logoClone.style.transform = 'translate(-50%, -50%)';
                 }, 30);
 
@@ -1395,9 +1749,7 @@
                     overlay.classList.remove('active');
 
                     if (action === 'open-projects') {
-                        projectsPage.classList.add('active');
-                        document.body.style.overflow = 'hidden';
-                        projectsPage.scrollTop = 0;
+                        openProjectsPage();
                     }
                 }, 1100);
 
@@ -1438,6 +1790,91 @@
                 setTimeout(() => spark.remove(), 600);
             }
         }
+
+        // MENU MOBILE (☰)
+        const menuToggle = document.getElementById('menuToggle');
+        const mainNav = document.getElementById('mainNav');
+
+        function closeMenu() {
+            mainNav.classList.remove('open');
+            menuToggle.classList.remove('open');
+            menuToggle.setAttribute('aria-expanded', 'false');
+            menuToggle.setAttribute('aria-label', 'Ouvrir le menu');
+        }
+
+        menuToggle.addEventListener('click', () => {
+            const isOpen = mainNav.classList.toggle('open');
+            menuToggle.classList.toggle('open', isOpen);
+            menuToggle.setAttribute('aria-expanded', String(isOpen));
+            menuToggle.setAttribute('aria-label', isOpen ? 'Fermer le menu' : 'Ouvrir le menu');
+        });
+
+        // Le menu se ferme après un choix, ou si on touche ailleurs sur la page
+        mainNav.querySelectorAll('a').forEach(link => link.addEventListener('click', closeMenu));
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('header')) closeMenu();
+        });
+
+        // GALERIE : DÉFILEMENT EN GLISSANT LE DOIGT
+        const carouselContainer = document.querySelector('.carousel-container');
+        let touchStartX = 0;
+        let touchStartY = 0;
+
+        carouselContainer.addEventListener('touchstart', (e) => {
+            touchStartX = e.touches[0].clientX;
+            touchStartY = e.touches[0].clientY;
+        }, { passive: true });
+
+        carouselContainer.addEventListener('touchend', (e) => {
+            const dx = e.changedTouches[0].clientX - touchStartX;
+            const dy = e.changedTouches[0].clientY - touchStartY;
+            // Glissement horizontal net (et pas un défilement vertical de la page)
+            if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy)) {
+                moveSlide(dx < 0 ? 1 : -1);
+            }
+        }, { passive: true });
+
+        // ENVOI DU FORMULAIRE SANS QUITTER LA PAGE (Web3Forms)
+        // Si JavaScript ne fonctionne pas, le formulaire s'envoie quand même de la manière classique.
+        const contactForm = document.getElementById('contactForm');
+        const submitBtn = document.getElementById('submitBtn');
+        const formStatus = document.getElementById('formStatus');
+
+        contactForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Envoi en cours...';
+            formStatus.className = 'form-status';
+            formStatus.textContent = '';
+
+            const data = Object.fromEntries(new FormData(contactForm));
+            // Objet de l'e-mail plus clair dans votre boîte : "[VOLTACS] Demande de devis – Jean Dupont"
+            data.subject = `[VOLTACS] ${data.subject} – ${data.name}`;
+
+            try {
+                const response = await fetch(contactForm.action, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+                    body: JSON.stringify(data)
+                });
+                const result = await response.json();
+
+                if (response.ok && result.success) {
+                    contactForm.reset();
+                    formStatus.className = 'form-status success';
+                    formStatus.textContent = '✓ Merci ! Votre demande a bien été envoyée. Je vous recontacte dans les plus brefs délais.';
+                } else {
+                    throw new Error(result.message || 'Erreur');
+                }
+            } catch (err) {
+                formStatus.className = 'form-status error';
+                formStatus.textContent = "L'envoi n'a pas abouti. Vérifiez votre connexion et réessayez dans un instant.";
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'Envoyer la demande';
+            }
+        });
     </script>
 </body>
 </html>
