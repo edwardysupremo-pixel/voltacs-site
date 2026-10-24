@@ -81,6 +81,7 @@
   const envoyer = document.getElementById('vx-envoyer');
   const info = document.getElementById('vx-bulle-info');
   let historique = [];
+  const SESSION = Date.now().toString(36) + Math.random().toString(36).slice(2, 10);
   let accueilFait = false;
 
   function ajouter(contenu, classe) {
@@ -158,7 +159,7 @@
       const r = await fetch(WORKER + '/chat', {
         method: 'POST',
         headers: { 'content-type': 'application/json' },
-        body: JSON.stringify({ messages: historique }),
+        body: JSON.stringify({ messages: historique, session: SESSION }),
       });
       const data = await r.json();
       attente.className = 'vx-msg vx-ia';
