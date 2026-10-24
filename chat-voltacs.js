@@ -109,20 +109,28 @@
   setTimeout(() => { if (!fenetre.classList.contains('ouvert')) info.style.display = 'none'; }, 15000);
 
   async function envoyerMail(d) {
-    const transcription = historique.map(m => (m.role === 'user' ? 'Client : ' : 'Assistant : ') + m.content).join('\n\n');
+    const v = x => String(x || '').trim();
+    const transcription = historique
+      .map(m => (m.role === 'user' ? '👤 CLIENT : ' : '🤖 ASSISTANT : ') + m.content)
+      .join('\n\n');
+    const contact = [v(d.telephone) && '📞 ' + v(d.telephone), v(d.email) && '✉️ ' + v(d.email)].filter(Boolean).join('   ');
     const corps = {
       access_key: CLE_WEB3FORMS,
-      subject: '[VOLTACS] Demande via le chat – ' + (d.nom || 'Client'),
+      subject: '⚡ Nouvelle demande – ' + (v(d.nom) || 'Client') + (v(d.commune) ? ' (' + v(d.commune) + ')' : ''),
       from_name: 'Chat VOLTACS',
-      name: d.nom || '',
-      phone: d.telephone || '',
-      commune: d.commune || '',
-      type_travaux: d.type_travaux || '',
-      urgence: d.urgence || '',
-      disponibilites: d.disponibilites || '',
-      message: d.description || '',
-      conversation: transcription,
     };
+    if (v(d.email)) corps.replyto = v(d.email);
+    const champs = [
+      ['📋 Demande', v(d.description)],
+      ['👤 Client', v(d.nom)],
+      ['📱 Contact', contact],
+      ['📍 Commune', v(d.commune)],
+      ['🔧 Travaux', v(d.type_travaux)],
+      ['🚨 Urgence', v(d.urgence)],
+      ['📅 Disponibilités', v(d.disponibilites)],
+    ];
+    champs.forEach(([cle, val]) => { if (val) corps[cle] = val; });
+    corps['💬 Conversation complète'] = transcription;
     const r = await fetch('https://api.web3forms.com/submit', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
