@@ -660,6 +660,27 @@
             font-size: 0.95rem;
         }
 
+        /* --- TARIFS SECTION --- */
+        .tarifs { padding: var(--section-padding); border-top: 1px solid var(--border-color); }
+        .tarifs .section-subtitle { max-width: 760px; margin-left: auto; margin-right: auto; }
+        .tarifs-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(330px, 100%), 1fr)); gap: 28px; align-items: start; }
+        .tarif-carte { background-color: var(--bg-card); border: 1px solid var(--border-color); padding: 32px 28px; transition: border-color 0.3s ease; }
+        .tarif-carte:hover { border-color: var(--electric-blue); }
+        .tarif-tete { display: flex; gap: 16px; align-items: flex-start; margin-bottom: 18px; }
+        .tarif-tete .service-icon { font-size: 2rem; margin: 0; }
+        .tarif-tete h3 { font-size: 1.25rem; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 4px; }
+        .tarif-tete p { color: var(--text-muted); font-size: 0.85rem; line-height: 1.4; }
+        .tarif-liste { list-style: none; margin: 0; padding: 0; }
+        .tarif-liste li { display: flex; justify-content: space-between; gap: 14px; padding: 12px 0; border-top: 1px solid var(--border-color); }
+        .tarif-nom { font-size: 0.95rem; flex: 1; min-width: 0; }
+        .tarif-nom small, .tarif-prix small { display: block; color: var(--text-muted); font-size: 0.75rem; margin-top: 3px; font-weight: 400; }
+        .tarif-prix { text-align: right; white-space: nowrap; color: var(--electric-cyan); font-weight: 700; font-size: 1.05rem; }
+        .tarifs-note { color: var(--text-muted); font-size: 0.85rem; text-align: center; max-width: 760px; margin: 30px auto 0; line-height: 1.5; }
+        .tarifs-cta { text-align: center; margin-top: 26px; }
+        @media (max-width: 480px) {
+            .tarif-carte { padding: 24px 18px; }
+        }
+
         /* --- CONTACT SECTION --- */
         .contact {
             padding: var(--section-padding);
@@ -1247,6 +1268,7 @@
                 <li><a href="#accueil" class="action-btn" data-target="accueil">Accueil</a></li>
                 <li><a href="#chantiers" class="action-btn" data-action="open-projects">Chantiers Réalisés</a></li>
                 <li><a href="#services" class="action-btn" data-target="services">Expertises</a></li>
+                <li><a href="#tarifs" class="action-btn" data-target="tarifs">Tarifs</a></li>
                 <li><a href="#contact" class="action-btn" data-target="contact">Devenir Client</a></li>
             </ul>
         </nav>
@@ -1319,6 +1341,46 @@
                 <p>Contrôle d'accès, vidéophonie IP connectée, caméras de surveillance et réseaux VDI pour une maison entièrement sécurisée et interconnectée.</p>
             </div>
         </div>
+    </section>
+
+    <!-- TARIFS SECTION -->
+    <section class="tarifs" id="tarifs">
+        <h2 class="section-title">Tarifs transparents</h2>
+        <p class="section-subtitle">Des prix clairs avant de commencer. Les montants affichés sont TVA 6 % comprise (rénovation d'un logement de plus de 10 ans) ; le prix hors TVA est indiqué en dessous. Construction neuve ou logement de moins de 10 ans : TVA 21 %.</p>
+        <div class="tarifs-grid">
+            <div class="tarif-carte">
+                <div class="tarif-tete"><span class="service-icon">🔧</span><div><h3>Dépannage</h3><p>À l'heure, pour les pannes et petites interventions</p></div></div>
+                <ul class="tarif-liste">
+                    <li><span class="tarif-nom">Main-d'œuvre</span><span class="tarif-prix">42,40 €/h<small>40 € HTVA</small></span></li>
+                    <li><span class="tarif-nom">Déplacement<small>Bruxelles et 20 km autour</small></span><span class="tarif-prix">31,80 €<small>30 € HTVA</small></span></li>
+                    <li><span class="tarif-nom">Dépannage minimum<small>1 h de travail + déplacement</small></span><span class="tarif-prix">74,20 €<small>70 € HTVA</small></span></li>
+                    <li><span class="tarif-nom">Urgence le soir ou le samedi</span><span class="tarif-prix">53 €/h<small>50 € HTVA</small></span></li>
+                </ul>
+            </div>
+            <div class="tarif-carte">
+                <div class="tarif-tete"><span class="service-icon">🏠</span><div><h3>Installation & rénovation</h3><p>Au forfait pour les chantiers : fourniture et pose, matériel Niko standard</p></div></div>
+                <ul class="tarif-liste">
+                    <li><span class="tarif-nom">Prise simple 20 A</span><span class="tarif-prix">58,30 €<small>55 € HTVA</small></span></li>
+                    <li><span class="tarif-nom">Prise double 20 A</span><span class="tarif-prix">74,20 €<small>70 € HTVA</small></span></li>
+                    <li><span class="tarif-nom">Point lumineux + interrupteur</span><span class="tarif-prix">90,10 €<small>85 € HTVA</small></span></li>
+                    <li><span class="tarif-nom">Point lumineux en va-et-vient</span><span class="tarif-prix">137,80 €<small>130 € HTVA</small></span></li>
+                    <li><span class="tarif-nom">Circuit dédié<small>lave-linge, four, lave-vaisselle…</small></span><span class="tarif-prix">127,20 €<small>120 € HTVA</small></span></li>
+                    <li><span class="tarif-nom">Tableau électrique (maison)<small>coffret, différentiels, disjoncteurs</small></span><span class="tarif-prix">dès 1 166 €<small>dès 1 100 € HTVA</small></span></li>
+                    <li><span class="tarif-nom">Rénovation complète<small>matériel compris, selon le nombre de points</small></span><span class="tarif-prix">dès 58,30 €/m²<small>dès 55 € HTVA</small></span></li>
+                </ul>
+            </div>
+            <div class="tarif-carte">
+                <div class="tarif-tete"><span class="service-icon">📋</span><div><h3>Conformité RGIE</h3><p>Schémas, plans et contrôle pour une installation certifiée</p></div></div>
+                <ul class="tarif-liste">
+                    <li><span class="tarif-nom">Diagnostic de l'installation<small>déduit si vous acceptez les travaux</small></span><span class="tarif-prix">dès 169,60 €<small>dès 160 € HTVA</small></span></li>
+                    <li><span class="tarif-nom">Schéma unifilaire + plans de position</span><span class="tarif-prix">dès 265 €<small>dès 250 € HTVA</small></span></li>
+                    <li><span class="tarif-nom">Dossier de conformité + présence au contrôle</span><span class="tarif-prix">127,20 €<small>120 € HTVA</small></span></li>
+                    <li><span class="tarif-nom">Contrôle par un organisme agréé<small>Vinçotte, BTV, ACA…</small></span><span class="tarif-prix">au prix coûtant<small>125 à 250 € TVAC</small></span></li>
+                </ul>
+            </div>
+        </div>
+        <p class="tarifs-note">Prix indicatifs. Chaque chantier reçoit un devis détaillé et fixe : pas de surprise sur la facture. Le matériel des dépannages est facturé en plus, au prix réel. Pour les gros travaux, paiement par tranches.</p>
+        <div class="tarifs-cta"><button class="hero-cta action-btn" data-target="contact">Demander mon devis</button></div>
     </section>
 
     <!-- CONTACT SECTION -->
